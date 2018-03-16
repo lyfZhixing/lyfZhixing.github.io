@@ -5,9 +5,9 @@
 # Site
 title: 小知行的博客
 subtitle:
-description:
+description: 乘风破浪会有时
 author: lyf
-language:
+language: zh-CN
 timezone:
 
 # URL
@@ -73,6 +73,9 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: next
+
+#侧边栏头像设置
+avatar: http://img4.imgtn.bdimg.com/it/u=1373411777,3992091759&fm=27&gp=0.jpg
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
