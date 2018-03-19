@@ -1,7 +1,8 @@
 ---
 title: web.xml详解
 date: 2018-03-19 10:50:18
-tags: - web.xml
+tags:
+- web.xml
 categories:
 - 环境搭建
 - 配置文件
