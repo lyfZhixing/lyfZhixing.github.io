@@ -1,7 +1,10 @@
 ---
 title: my first blog
 date: 2018-03-16 16:31:01
-tags:
+tags: [hexo,git]
+categories:
+- 环境搭建
+- hexo+GitHub搭建博客
 ---
 1. 如何用hexo+GitHub搭建个人博客  
 &ensp;&ensp;基础：<http://www.cnblogs.com/fengxiongZz/p/7707219.html>  
