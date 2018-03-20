@@ -13,5 +13,9 @@ categories:
 2. 使用hexo，如果换了电脑怎么更新博客？
 &ensp;&ensp;参考：<http://crazymilk.github.io/2015/12/28/GitHub-Pages-Hexo搭建博客/#more>
 3. 自己结合以上两位博主的经验整理
+4. 常用命令整理：  
+&ensp;&ensp;hexo new post “博客名”——新建文章  
+&ensp;&ensp;npm install hexo-deployer-git --save——第一次部署文章前，需要安装扩展
+
 &ensp;&ensp;<未完待续……>
 
