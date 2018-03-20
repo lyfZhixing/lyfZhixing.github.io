@@ -3,8 +3,8 @@ title: pom.xml详解
 date: 2018-03-20 15:50:08
 tags: [Maven,Spring,SpringMVC,Mybatis]  
 categories: 
--环境搭建
--配置文件
+- 环境搭建
+- 配置文件
 ---
 > pom.xml详解  
 &emsp;&emsp;pom.xml主要描述了项目的maven坐标，依赖关系，开发者需要遵循的规则，缺陷管理系统，组织和licenses，以及其他所有的项目相关因素，是项目级别的配置文件。  
