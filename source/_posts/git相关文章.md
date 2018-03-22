@@ -6,6 +6,9 @@ categories:
 - 版本控制
 - GIT
 ---
+前辈们的总结  
+<!-- more -->   
+
 > git命令-远程仓库拉取、本地仓库更新、工作空间提交等等
 
 <http://blog.csdn.net/jtracydy/article/details/70402663>

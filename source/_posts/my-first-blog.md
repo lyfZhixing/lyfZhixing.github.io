@@ -7,6 +7,7 @@ categories:
 - hexo+GitHub搭建博客
 ---
 1. 如何用hexo+GitHub搭建个人博客  
+<!-- more -->   
 &ensp;&ensp;基础：<http://www.cnblogs.com/fengxiongZz/p/7707219.html>  
 &ensp;&ensp;进阶：<http://www.cnblogs.com/fengxiongZz/p/7707568.html>  
 &ensp;&ensp;这样搭建有一个问题：更换电脑或重装系统之后博客的配置和本地文件会丢失，无法更新博客，为了防止这种情况出现，请结合第二步。

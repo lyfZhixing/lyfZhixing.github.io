@@ -8,7 +8,8 @@ categories:
 ---
 > pom.xml详解  
 &emsp;&emsp;pom.xml主要描述了项目的maven坐标，依赖关系，开发者需要遵循的规则，缺陷管理系统，组织和licenses，以及其他所有的项目相关因素，是项目级别的配置文件。  
-&emsp;&emsp;下边是一个Maven项目的pom.xml配置文件，以此为例进行解析。  
+&emsp;&emsp;下边是一个Maven项目的pom.xml配置文件，以此为例进行解析。   
+<!-- more --> 
 
 ```
 <?xml version="1.0"?>

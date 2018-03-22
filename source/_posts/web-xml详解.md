@@ -8,7 +8,8 @@ categories:
 - 配置文件
 ---
 > ### web.xml详解
-&ensp;&ensp;&ensp;&ensp;==入手一个web工程要从web.xml开始着眼==，下面是web.xml文件详解（转载<https://www.cnblogs.com/ClassNotFoundException/p/6641867.html>）
+&ensp;&ensp;&ensp;&ensp;==入手一个web工程要从web.xml开始着眼==，下面是web.xml文件详解（转载<https://www.cnblogs.com/ClassNotFoundException/p/6641867.html>）  
+<!-- more --> 
 
 1 定义头和根元素
 　　

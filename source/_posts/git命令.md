@@ -8,6 +8,7 @@ categories:
 ---
 > **GIT （分布式版本控制系统）**  
  以前一直用GitHub for Windows 提交代码，都在图形界面操作。现在练习使用git命令来进行远程仓库拉取、本地仓库更新、工作空间提交等等（图一简要的描述了git工作的流程）。  
+<!-- more -->  
 ![image](/images/git工作示意图.png)  
 *++图一++*  
 ##### - 从GitHub.com克隆项目，复制ssh地址：  
