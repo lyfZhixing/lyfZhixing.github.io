@@ -6,6 +6,8 @@ categories:
 - 环境搭建
 - 配置文件
 ---
+mybatis与spring整合时常遇到的问题  
+<!-- more -->   
  ##### mapper.xml中容易出错的方法和区别:  
 1. selectByExample和selectByExampleWithBLOBs的区别(包含Example的使用)：  
  如果想要搜索结果包含大字段类型，则必须使用selectByExampleWithBLOBs。无需检索大字段，则使用selectByExample；  
