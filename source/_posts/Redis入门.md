@@ -9,6 +9,7 @@ categories:
 ---
 > 配置连接池  
 
+<!-- more --> 
 ```
 package com.redis.demo;
 
