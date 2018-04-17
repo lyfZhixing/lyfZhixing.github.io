@@ -13,8 +13,9 @@ categories:
 由于毕设使用的是SSM框架，索性在这里把spring和mybatis整合的配置文件也一块总结了 ，这些配置文件都可以在以后的项目中复用。这一节只是最基础的配置，以后再开发过程中如若要修改或添加配置，会在后续说明 
 ##### spring配置文件头  
 
+
 ```
-	<beans xmlns="http://www.springframework.org/schema/beans"
+<beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
@@ -28,11 +29,14 @@ categories:
 		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
 		http://www.springframework.org/schema/tx 
 		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
-  ``` 
+```
+
+ 
   
 ##### springMVC配置  
 
  在springmvc.xml中可以配置的模块：1. 最基本的视图解析器和Handler扫描等   2. json解析  3. 参数绑定类型转换器……  
+
 
 ```
 <!-- 配置Handler  自动扫描包，多个包中间用逗号隔开-->
@@ -47,13 +51,15 @@ categories:
 		<!-- 配置jsp路径的后缀 -->
 		<property name="suffix" value=".jsp"/>
 	 </bean>
-```     
+```
+     
 
 ##### applicationContext配置  
   
 我习惯把applicationContext配置分为三部分，applicationContext-dao,applicationContext-service,applicationContext-transaction   
 
 ###### applicationContext-dao.xml(已整合mybatis)   
+
 
 ```
 <!-- 加载db.properties文件中的内容，db.properties文件中key命名要有一定的特殊规则 -->
@@ -81,15 +87,18 @@ categories:
 		<property name="basePackage" value="com.adoptPet.userInterface.mapper"></property>
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
-```  
+```
 
 ######  applicationContext-service.xml(业务层)    
 
+
 ```
 <bean id="UserService" class="com.adoptPet.userInterface.service.impl.UserServiceImpl"/>
-```  
+```
+
 
 ###### applicationContext-transaction.xml(事务控制)    
+
 
 ```
 <!-- 事务管理器 
@@ -119,7 +128,7 @@ categories:
 		<aop:config>
 			<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.adoptPet.userInterface.service.impl.*.*(..))"/>
 		</aop:config>
-```    
+```
 
 ##### mybatis的sqlMapConfig.xml配置   
 
@@ -147,3 +156,77 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 </configuration>
 ```
+
+##### web.xml 配置  
+```
+<!--springmvc前端控制器  -->
+  <servlet>
+  	<servlet-name>adoptPet</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<!-- contextConfigLocation配置springmvc加载的配置文件（处理器映射器，适配器等） -->
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:spring/springmvc.xml</param-value>
+  	</init-param>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>adoptPet</servlet-name>
+  	<url-pattern>*.action</url-pattern>
+  </servlet-mapping>
+  <!-- 加载spring容器 -->
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath:spring/applicationContext-*.xml</param-value>
+  </context-param>
+  <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+```
+
+#### Controller编写  
+这里用一个简单的Controller类做为示例  
+@Controller注解标识这个类为一个Handler  
+@RequestMapping("/index")作为类注解科一窄化请求映射  
+@RequestMapping("/index")注解方法,最终在浏览器中输入：localhost:8080/projectName/index/index.action访问index.jsp  
+@Autowired,通过@Autowired自动装配方式，从IoC容器中去查找到，并返回给该属性,@Autowired是单例的，在启动spring IoC时，容器自动装载了一个AutowiredAnnotationBeanPostProcessor后置处理器，当容器扫描到@Autowied、@Resource或@Inject时，就会在IoC容器自动查找需要的bean，并装配给该对象的属性  
+@ResponseBody  ，ajax交互时响应数据，数据类型是json时需要在springmvc.xml中配置解析json
+
+```
+@Controller
+@RequestMapping("/index")
+public class IndexController {
+	
+	@Autowired private UserService userService;
+	
+	/**首页*/
+	@RequestMapping("/index")
+	public String toIndex(){
+		return "index";
+	}
+	
+	/**登录*/
+	@RequestMapping(value={"/login"},method={RequestMethod.POST})
+	@ResponseBody
+	public String login(String phoneno ,String upwd ){
+		……
+		return json;
+	}
+	
+}
+
+```  
+
