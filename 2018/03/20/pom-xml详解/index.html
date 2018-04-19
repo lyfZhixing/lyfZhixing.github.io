@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="pom.xml详解&amp;emsp;&amp;emsp;pom.xml主要描述了项目的maven坐标，依赖关系，开发者需要遵循的规则，缺陷管理系统，组织和licenses，以及其他所有的项目相关因素，是项目级别的配置文件。&amp;emsp;&amp;emsp;下边是一个Maven项目的pom.xml配置文件，以此为例进行解析。">
+<meta name="keywords" content="Maven,Spring,SpringMVC,Mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pom.xml详解">
+<meta property="og:url" content="http://yoursite.com/2018/03/20/pom-xml详解/index.html">
+<meta property="og:site_name" content="小知行的博客">
+<meta property="og:description" content="pom.xml详解&amp;emsp;&amp;emsp;pom.xml主要描述了项目的maven坐标，依赖关系，开发者需要遵循的规则，缺陷管理系统，组织和licenses，以及其他所有的项目相关因素，是项目级别的配置文件。&amp;emsp;&amp;emsp;下边是一个Maven项目的pom.xml配置文件，以此为例进行解析。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-19T04:19:23.459Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pom.xml详解">
+<meta name="twitter:description" content="pom.xml详解&amp;emsp;&amp;emsp;pom.xml主要描述了项目的maven坐标，依赖关系，开发者需要遵循的规则，缺陷管理系统，组织和licenses，以及其他所有的项目相关因素，是项目级别的配置文件。&amp;emsp;&amp;emsp;下边是一个Maven项目的pom.xml配置文件，以此为例进行解析。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/20/pom-xml详解/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>pom.xml详解 | 小知行的博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小知行的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/pom-xml详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lyf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ww2.sinaimg.cn/thumb150/005N8R4Njw8f4r7r2nh2vj30ro0rojtj.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小知行的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pom.xml详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T15:50:08+08:00">2018-03-20</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/环境搭建/" itemprop="url" rel="index"><span itemprop="name">环境搭建</span></a></span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/环境搭建/配置文件/" itemprop="url" rel="index"><span itemprop="name">配置文件</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="pom-xml详解"><a href="#pom-xml详解" class="headerlink" title="pom.xml详解"></a>pom.xml详解</h1><p>&emsp;&emsp;pom.xml主要描述了项目的maven坐标，依赖关系，开发者需要遵循的规则，缺陷管理系统，组织和licenses，以及其他所有的项目相关因素，是项目级别的配置文件。<br>&emsp;&emsp;下边是一个Maven项目的pom.xml配置文件，以此为例进行解析。<br><a id="more"></a> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;project</span><br><span class="line">    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><br><span class="line">    xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;</span><br><span class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</span><br><span class="line">    &lt;!--必填项GAV--&gt;</span><br><span class="line">    &lt;!--企业名称--&gt;</span><br><span class="line">    &lt;groupId&gt;com.tortuousroad&lt;/groupId&gt;</span><br><span class="line">    &lt;!--项目名称，项目的唯一标识--&gt;</span><br><span class="line">    &lt;artifactId&gt;groupon&lt;/artifactId&gt;</span><br><span class="line">    &lt;!--版本号--&gt;</span><br><span class="line">    &lt;version&gt;1.0&lt;/version&gt;</span><br><span class="line">    &lt;!--打包形式：pom,jar,war默认为jar，</span><br><span class="line">    若要使用Maven进行模块管理，则在每个模块中都有pom.xml文件</span><br><span class="line">    父级的pom.xml packaging应配置为pom,子级模块中的packaging配置为</span><br><span class="line">    jar或war若要进行部署则用war，其他情况推荐用jar--&gt;</span><br><span class="line">    &lt;packaging&gt;pom&lt;/packaging&gt;</span><br><span class="line">    &lt;!----&gt;</span><br><span class="line">    &lt;name&gt;$&#123;project.artifactId&#125;&lt;/name&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!--版权许可，这里通常描述采用的开源协议是什么。--&gt;</span><br><span class="line">    &lt;licenses&gt;</span><br><span class="line">        &lt;license&gt;</span><br><span class="line">            &lt;name&gt;Apache 2&lt;/name&gt;</span><br><span class="line">            &lt;url&gt;http://www.apache.org/licenses/LICENSE-2.0.txt&lt;/url&gt;</span><br><span class="line">            &lt;distribution&gt;repo&lt;/distribution&gt;</span><br><span class="line">            &lt;comments&gt;A business-friendly OSS license&lt;/comments&gt;</span><br><span class="line">        &lt;/license&gt;</span><br><span class="line">    &lt;/licenses&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--组织机构信息--&gt;</span><br><span class="line">    &lt;organization&gt;</span><br><span class="line">        &lt;name&gt;&lt;/name&gt;</span><br><span class="line">        &lt;url&gt;&lt;/url&gt;</span><br><span class="line">    &lt;/organization&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--模块划分，在每个模块中都有一个pom.xml--&gt;</span><br><span class="line">    &lt;modules&gt;</span><br><span class="line">        &lt;module&gt;Site&lt;/module&gt;</span><br><span class="line">        &lt;module&gt;Service&lt;/module&gt;</span><br><span class="line">        &lt;module&gt;Admin&lt;/module&gt;</span><br><span class="line">        &lt;module&gt;ImageServer&lt;/module&gt;</span><br><span class="line">        &lt;module&gt;Alipay&lt;/module&gt;</span><br><span class="line">    &lt;/modules&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--统一管理版本信息以及字符集等属性</span><br><span class="line">    在后边使用时：用$&#123;spring_version&#125;引用即可--&gt;</span><br><span class="line">    &lt;properties&gt;</span><br><span class="line">        &lt;spring_version&gt;4.3.2.RELEASE&lt;/spring_version&gt;</span><br><span class="line"></span><br><span class="line">        &lt;!--......--&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!--&lt;dependencyManagement&gt;主要用于存在父子继承的Maven项目中。</span><br><span class="line">	在父项目中通过&lt;dependencyManagement&gt;设置被依赖的Maven构件，</span><br><span class="line">	在子项目中设置被依赖的Maven构件时，只要给出构件的groupId和artifactId，</span><br><span class="line">	而version则默认引用父项目的设置。例如下边的org.slf4j--&gt;</span><br><span class="line">    &lt;dependencyManagement&gt;</span><br><span class="line">        &lt;dependencies&gt;</span><br><span class="line"></span><br><span class="line">            &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-aop&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;$&#123;spring_version&#125;&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">           ......</span><br><span class="line">           &lt;dependency&gt;</span><br><span class="line">                &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;1.7.12&lt;/version&gt;</span><br><span class="line">            &lt;/dependency&gt;</span><br><span class="line">			.......</span><br><span class="line">        &lt;/dependencies&gt;</span><br><span class="line">    &lt;/dependencyManagement&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- 通过&lt;dependencies&gt;给出Maven项目所依赖的第三方类库 --&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">	</span><br><span class="line">        &lt;!-- 只需给出GA，V在dependencyManagement已声明 --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        ......</span><br><span class="line">        &lt;!-- &lt;dependency&gt; --&gt;</span><br><span class="line">            &lt;!-- &lt;groupId&gt;junit&lt;/groupId&gt; --&gt;</span><br><span class="line">            &lt;!-- &lt;artifactId&gt;junit&lt;/artifactId&gt; --&gt;</span><br><span class="line">            &lt;!-- &lt;version&gt;4.12&lt;/version&gt; --&gt;</span><br><span class="line">        &lt;!-- &lt;/dependency&gt; --&gt;</span><br><span class="line">       ......</span><br><span class="line">	   &lt;dependency&gt;  </span><br><span class="line">			&lt;groupId&gt;junit&lt;/groupId&gt;  </span><br><span class="line">			&lt;artifactId&gt;junit&lt;/artifactId&gt;  </span><br><span class="line">			&lt;version&gt;4.0&lt;/version&gt; </span><br><span class="line">			&lt;!-- 打包类型，默认jar --&gt;</span><br><span class="line">			&lt;type&gt;jar&lt;/type&gt;</span><br><span class="line">			</span><br><span class="line">			&lt;!-- 被依赖的Maven构件在classpath中的可访问范围  </span><br><span class="line">			compile，默认值，被依赖的Maven构件在compile、runtime和test的时候都可以在classpath中找到</span><br><span class="line">			provided，被依赖的Maven构件在compile和test的时候都可以在classpath中找到，</span><br><span class="line">			在runtime的时候由JDK或容器提供</span><br><span class="line">			system，被依赖的Maven构件在compile和test的时候都可以在classpath中找到，在runtime的时候必须显式</span><br><span class="line">			将JAR加入到classpath中，此时可以设置&lt;systemPath&gt;&lt;/systemPath&gt;该值必须是一个绝对路径，</span><br><span class="line">			可以通过环境变量给出具体的绝对路径</span><br><span class="line">			runtime，被依赖的Maven构件在runtime和test的时候都可以在classpath中找到，在compile时不是必须的</span><br><span class="line">			test，被依赖的Maven构件在test的时候可以在classpath中找到，</span><br><span class="line">			在compile和runtime时不是必须的--&gt;</span><br><span class="line">			&lt;scope&gt;test&lt;/scope&gt;  </span><br><span class="line">			&lt;!-- 当前Maven项目的构件被其他项目依赖，此处被依赖的Maven构件相对于其他项目来说是不必须的 --&gt;</span><br><span class="line">			&lt;optional&gt;true&lt;/optional&gt;  </span><br><span class="line">		&lt;/dependency&gt; </span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">    &lt;build&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;archive&gt;</span><br><span class="line">                        &lt;addMavenDescriptor&gt;true&lt;/addMavenDescriptor&gt;</span><br><span class="line">                        &lt;index&gt;true&lt;/index&gt;</span><br><span class="line">                        &lt;manifest&gt;</span><br><span class="line">                            &lt;addDefaultSpecificationEntries&gt;true&lt;/addDefaultSpecificationEntries&gt;</span><br><span class="line">                            &lt;addDefaultImplementationEntries&gt;true&lt;/addDefaultImplementationEntries&gt;</span><br><span class="line">                        &lt;/manifest&gt;</span><br><span class="line">                    &lt;/archive&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-deploy-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;skip&gt;false&lt;/skip&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;2.1&lt;/version&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;attach&gt;true&lt;/attach&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">                &lt;executions&gt;</span><br><span class="line">                    &lt;execution&gt;</span><br><span class="line">                        &lt;phase&gt;compile&lt;/phase&gt;</span><br><span class="line">                        &lt;goals&gt;</span><br><span class="line">                            &lt;goal&gt;jar&lt;/goal&gt;</span><br><span class="line">                        &lt;/goals&gt;</span><br><span class="line">                    &lt;/execution&gt;</span><br><span class="line">                &lt;/executions&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</span><br><span class="line">                &lt;version&gt;2.18.1&lt;/version&gt;</span><br><span class="line">                &lt;configuration&gt;</span><br><span class="line">                    &lt;skipTests&gt;true&lt;/skipTests&gt;</span><br><span class="line">                &lt;/configuration&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">        &lt;resources&gt;</span><br><span class="line">            &lt;resource&gt;</span><br><span class="line">                &lt;directory&gt;src/main/java&lt;/directory&gt;</span><br><span class="line">                &lt;includes&gt;</span><br><span class="line">                    &lt;include&gt;**/*.xml&lt;/include&gt;</span><br><span class="line">                &lt;/includes&gt;</span><br><span class="line">                &lt;filtering&gt;true&lt;/filtering&gt;</span><br><span class="line">            &lt;/resource&gt;</span><br><span class="line">        &lt;/resources&gt;</span><br><span class="line"></span><br><span class="line">        &lt;pluginManagement&gt;</span><br><span class="line">            &lt;plugins&gt;</span><br><span class="line">                &lt;plugin&gt;</span><br><span class="line">                    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;</span><br><span class="line">                    &lt;version&gt;$&#123;maven_jar_plugin_version&#125;&lt;/version&gt;</span><br><span class="line">                &lt;/plugin&gt;</span><br><span class="line">                &lt;plugin&gt;</span><br><span class="line">                    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;</span><br><span class="line">                    &lt;version&gt;$&#123;maven_war_plugin_version&#125;&lt;/version&gt;</span><br><span class="line">                &lt;/plugin&gt;</span><br><span class="line">                &lt;plugin&gt;</span><br><span class="line">                    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;maven-install-plugin&lt;/artifactId&gt;</span><br><span class="line">                    &lt;version&gt;$&#123;maven_install_plugin_version&#125;&lt;/version&gt;</span><br><span class="line">                &lt;/plugin&gt;</span><br><span class="line">                &lt;plugin&gt;</span><br><span class="line">                    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;maven-deploy-plugin&lt;/artifactId&gt;</span><br><span class="line">                    &lt;version&gt;$&#123;maven_deploy_plugin_version&#125;&lt;/version&gt;</span><br><span class="line">                &lt;/plugin&gt;</span><br><span class="line">                &lt;plugin&gt;</span><br><span class="line">                    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">                    &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">                    &lt;version&gt;$&#123;maven_compiler_plugin_version&#125;&lt;/version&gt;</span><br><span class="line">                    &lt;configuration&gt;</span><br><span class="line">                        &lt;source&gt;$&#123;java_source_version&#125;&lt;/source&gt;</span><br><span class="line">                        &lt;target&gt;$&#123;java_target_version&#125;&lt;/target&gt;</span><br><span class="line">                        &lt;encoding&gt;$&#123;file_encoding&#125;&lt;/encoding&gt;</span><br><span class="line">                    &lt;/configuration&gt;</span><br><span class="line">                &lt;/plugin&gt;</span><br><span class="line">            &lt;/plugins&gt;</span><br><span class="line">        &lt;/pluginManagement&gt;</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line"></span><br><span class="line">    &lt;issueManagement&gt;</span><br><span class="line">        &lt;system&gt;GitHub&lt;/system&gt;</span><br><span class="line">        &lt;url&gt;&lt;/url&gt;</span><br><span class="line">    &lt;/issueManagement&gt;</span><br><span class="line"></span><br><span class="line">    &lt;developers&gt;</span><br><span class="line">        &lt;developer&gt;</span><br><span class="line">            &lt;name&gt;Road&lt;/name&gt;</span><br><span class="line">            &lt;id&gt;&lt;/id&gt;</span><br><span class="line">            &lt;email&gt;&lt;/email&gt;</span><br><span class="line">            &lt;roles&gt;</span><br><span class="line">                &lt;role&gt;Manager&lt;/role&gt;</span><br><span class="line">            &lt;/roles&gt;</span><br><span class="line">            &lt;timezone&gt;+8&lt;/timezone&gt;</span><br><span class="line">        &lt;/developer&gt;</span><br><span class="line">    &lt;/developers&gt;</span><br><span class="line"></span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Maven/" rel="tag"># Maven</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/SpringMVC/" rel="tag"># SpringMVC</a>
+          
+            <a href="/tags/Mybatis/" rel="tag"># Mybatis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/web-xml详解/" rel="next" title="web.xml详解">
+                <i class="fa fa-chevron-left"></i> web.xml详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/22/springmvc/" rel="prev" title="springmvc">
+                springmvc <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ww2.sinaimg.cn/thumb150/005N8R4Njw8f4r7r2nh2vj30ro0rojtj.jpg"
+                alt="lyf" />
+            
+              <p class="site-author-name" itemprop="name">lyf</p>
+              <p class="site-description motion-element" itemprop="description">乘风破浪会有时</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pom-xml详解"><span class="nav-number">1.</span> <span class="nav-text">pom.xml详解</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lyf</span>
+
+  
+
+  
+|
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.6"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

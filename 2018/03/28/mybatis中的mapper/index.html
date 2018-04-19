@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.6',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="mybatis与spring整合时常遇到的问题">
+<meta name="keywords" content="mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mybatis中的mapper">
+<meta property="og:url" content="http://yoursite.com/2018/03/28/mybatis中的mapper/index.html">
+<meta property="og:site_name" content="小知行的博客">
+<meta property="og:description" content="mybatis与spring整合时常遇到的问题">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-04-19T04:19:25.572Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mybatis中的mapper">
+<meta name="twitter:description" content="mybatis与spring整合时常遇到的问题">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/28/mybatis中的mapper/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>mybatis中的mapper | 小知行的博客</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小知行的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/mybatis中的mapper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lyf">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ww2.sinaimg.cn/thumb150/005N8R4Njw8f4r7r2nh2vj30ro0rojtj.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小知行的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mybatis中的mapper</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T14:47:30+08:00">2018-03-28</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/环境搭建/" itemprop="url" rel="index"><span itemprop="name">环境搭建</span></a></span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/环境搭建/配置文件/" itemprop="url" rel="index"><span itemprop="name">配置文件</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>mybatis与spring整合时常遇到的问题<br><a id="more"></a> </p>
+<h2 id="mapper-xml中容易出错的方法和区别"><a href="#mapper-xml中容易出错的方法和区别" class="headerlink" title="mapper.xml中容易出错的方法和区别:"></a>mapper.xml中容易出错的方法和区别:</h2><ol>
+<li>selectByExample和selectByExampleWithBLOBs的区别(包含Example的使用)：<br>如果想要搜索结果包含大字段类型，则必须使用selectByExampleWithBLOBs。无需检索大字段，则使用selectByExample；  </li>
+<li>insertSelective和insert的区别：<br>当有部分字段未设值时，使用insertSelective：当有所有字段均已设值时，使用insert；   </li>
+<li>修改操作：<br>updateByExample<br>如果example定义了两个字段，数据库共4个字段，则修改数据库的两个字段，其余两个字段改为null；<br>updateByExampleSelective<br>如果example定义了两个字段，数据库共4个字段，则修改数据库的两个字段，其余两个字段不动；<br>updateByExampleWithBLOBs和updateByExample相比此方法可以修改大字段类型，其余性质和updateByExample相同<br>updateByPrimaryKey<br>如果record定义了两个字段，其中有一个字段是主键，数据库共4个字段，则根据主键修改数据库的两个字段，其余两个字段改为null；<br>updateByPrimaryKeySelective　<br>如果record定义了两个字段，其中有一个字段是主键，数据库共4个字段，则根据主键修改数据库的两个字段，其余两个字段不动；<br>updateByPrimaryKeyWithBLOBs和updateByPrimaryKey相比此方法可以修改大字段类型，其余性质和updateByPrimaryKey相同   </li>
+</ol>
+<h2 id="Mapper-xml语句中parameterType向SQL语句传参的两种方式：-和"><a href="#Mapper-xml语句中parameterType向SQL语句传参的两种方式：-和" class="headerlink" title="Mapper.xml语句中parameterType向SQL语句传参的两种方式：#{}和${}"></a>Mapper.xml语句中parameterType向SQL语句传参的两种方式：#{}和${}</h2><p>经常使用的是#{},因为这种方式可以防止SQL注入，#{}这种方式SQL语句是经过预编译的，把#{}中间的参数转义成字符串，举个例子：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from student where student_name = #&#123;name&#125;</span><br></pre></td></tr></table></figure>
+<p>预编译后,会动态解析成一个参数标记符?：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from student where student_name = ?</span><br></pre></td></tr></table></figure>
+<p>而使用${}在动态解析时候，会传入参数字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from student where student_name = &apos;lyrics&apos;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>总结：  </p>
+</blockquote>
+<p>#{} 这种取值是编译好SQL语句再取值<br>${} 这种是取值以后再去编译SQL语句  </p>
+<p>#{}方式能够很大程度防止sql注入。<br>$方式无法防止Sql注入。<br>$方式一般用于传入数据库对象，例如传入表名.<br>一般能用#的就别用$.  </p>
+<h2 id="mybatis与spring整合中service层的空指针异常"><a href="#mybatis与spring整合中service层的空指针异常" class="headerlink" title="mybatis与spring整合中service层的空指针异常"></a>mybatis与spring整合中service层的空指针异常</h2><ol>
+<li>controller层实例化service会出现空指针，应该用@Autowired自动装配注入service；  </li>
+<li>service层实现类中也要用@Autowired注入mapper；    </li>
+</ol>
+<h2 id="Failed-to-convert-value-of-type-‘java-lang-String’-to-required-type-‘java-util-Date’"><a href="#Failed-to-convert-value-of-type-‘java-lang-String’-to-required-type-‘java-util-Date’" class="headerlink" title="Failed to convert value of type ‘java.lang.String’ to required type ‘java.util.Date’;"></a>Failed to convert value of type ‘java.lang.String’ to required type ‘java.util.Date’;</h2><p>发生这一错误的主要原因是Controller类中需要接收的是Date类型，但是在页面端传过来的是String类型，最终导致了这个错误。<br>这里提供两种解决方案，一种是局部转换，一种是全局转换。  </p>
+<h3 id="局部转换"><a href="#局部转换" class="headerlink" title="局部转换"></a>局部转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(&quot;/updateItems&quot;)</span><br><span class="line">	public ModelAndView updateItems(Date createtime)&#123;</span><br><span class="line">		</span><br><span class="line">		ItemsCustom itemsCustom = new ItemsCustom();</span><br><span class="line">		itemsCustom.setCreatetime(createtime);</span><br><span class="line">		//....</span><br><span class="line">		ModelAndView mv = new ModelAndView();</span><br><span class="line">		//....</span><br><span class="line">		return mv;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	 @InitBinder  </span><br><span class="line">	    public void initBinder(WebDataBinder binder, WebRequest request) &#123;  </span><br><span class="line">	          </span><br><span class="line">	        //转换日期  </span><br><span class="line">	        DateFormat dateFormat=new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);  </span><br><span class="line">	        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));// CustomDateEditor为自定义日期编辑器  </span><br><span class="line">	    &#125;  </span><br><span class="line">```  </span><br><span class="line">### 全局转换  </span><br><span class="line">1. 创建CustomDate类实现WebBindingInitializer</span><br></pre></td></tr></table></figure>
+<p>public class CustomDate implements WebBindingInitializer{  </p>
+<pre><code>@Override  
+public void initBinder(WebDataBinder binder, WebRequest request) {  
+    // TODO Auto-generated method stub  
+    //转换日期  
+    DateFormat dateFormat=new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);  
+    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));  
+}  
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2. 在Spring-MVC.xml中配置日期转换</span><br></pre></td></tr></table></figure></p>
+<pre><code>&lt;!-- 日期转换 --&gt;  
+&lt;bean class=&quot;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&quot;&gt;  
+    &lt;property name=&quot;webBindingInitializer&quot;&gt;  
+        &lt;bean class=&quot;lyf.CustomDate&quot;/&gt;  
+    &lt;/property&gt;  
+&lt;/bean&gt;  
+</code></pre><p><code>`</code></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mybatis/" rel="tag"># mybatis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/23/mysql修改root密码/" rel="next" title="mysql修改root密码">
+                <i class="fa fa-chevron-left"></i> mysql修改root密码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/12/Redis入门/" rel="prev" title="Redis入门">
+                Redis入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://ww2.sinaimg.cn/thumb150/005N8R4Njw8f4r7r2nh2vj30ro0rojtj.jpg"
+                alt="lyf" />
+            
+              <p class="site-author-name" itemprop="name">lyf</p>
+              <p class="site-description motion-element" itemprop="description">乘风破浪会有时</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mapper-xml中容易出错的方法和区别"><span class="nav-number">1.</span> <span class="nav-text">mapper.xml中容易出错的方法和区别:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mapper-xml语句中parameterType向SQL语句传参的两种方式：-和"><span class="nav-number">2.</span> <span class="nav-text">Mapper.xml语句中parameterType向SQL语句传参的两种方式：#{}和${}</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis与spring整合中service层的空指针异常"><span class="nav-number">3.</span> <span class="nav-text">mybatis与spring整合中service层的空指针异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Failed-to-convert-value-of-type-‘java-lang-String’-to-required-type-‘java-util-Date’"><span class="nav-number">4.</span> <span class="nav-text">Failed to convert value of type ‘java.lang.String’ to required type ‘java.util.Date’;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#局部转换"><span class="nav-number">4.1.</span> <span class="nav-text">局部转换</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lyf</span>
+
+  
+
+  
+|
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.6"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
