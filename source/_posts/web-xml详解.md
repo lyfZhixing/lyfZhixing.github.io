@@ -7,11 +7,12 @@ categories:
 - 环境搭建
 - 配置文件
 ---
-> ### web.xml详解
+
+## web.xml详解
 &ensp;&ensp;&ensp;&ensp;==入手一个web工程要从web.xml开始着眼==，下面是web.xml文件详解（转载<https://www.cnblogs.com/ClassNotFoundException/p/6641867.html>）  
 <!-- more --> 
 
-1 定义头和根元素
+### 定义头和根元素
 　　
 
 ```
@@ -30,7 +31,7 @@ categories:
 &ensp;&ensp;&ensp;&ensp;DOCYTPE声明必须立即出现在此头之后。这个声明告诉服务器适用的servlet规范的版本（如2.2或2.3）并指定管理此文件其余部分内容的语法的DTD(Document Type Definition，文档类型定义)。
 所有部署描述符文件的顶层（根）元素为web-app。请注意，XML元素不像HTML，他们是大小写敏感的。因此，web-App和WEB-APP都是不合法的，web-app必须用小写。
 
-2 部署描述符文件内的元素次序
+### 部署描述符文件内的元素次序
 
 &ensp;&ensp;&ensp;&ensp;XML 元素不仅是大小写敏感的，而且它们还对出现在其他元素中的次序敏感。例如，XML头必须是文件中的第一项，DOCTYPE声明必须是第二项，而web- app元素必须是第三项。在web-app元素内，元素的次序也很重要。服务器不一定强制要求这种次序，但它们允许（实际上有些服务器就是这样做的）完全拒绝执行含有次序不正确的元素的Web应用。这表示使用非标准元素次序的web.xml文件是不可移植的。
 
@@ -111,11 +112,11 @@ categories:
 ```
 
 
-3 分配名称和定制的URL
+### 分配名称和定制的URL
 
 &ensp;&ensp;&ensp;&ensp;在web.xml中完成的一个最常见的任务是对servlet或JSP页面给出名称和定制的URL。用servlet元素分配名称，使用servlet-mapping元素将定制的URL与刚分配的名称相关联。
 
-&ensp;&ensp;3.1 分配名称
+#### 分配名称
 
 &ensp;&ensp;&ensp;&ensp;为了提供初始化参数，对servlet或JSP页面定义一个定制URL或分配一个安全角色，必须首先给servlet或JSP页面一个名称。可通过 servlet元素分配一个名称。最常见的格式包括servlet-name和servlet-class子元素
 
@@ -134,7 +135,7 @@ categories:
 
 &ensp;&ensp;&ensp;&ensp;这表示位于WEB-INF/classes/FullyQualifiedName的servlet已经得到了注册名ServletName。给servlet一个名称具有两个主要的含义。首先，初始化参数。定制的URL模式以及其他定制通过此注册名而不是类名引用此servlet。其次,可在 URL而不是类名中使用此名称。因此，利用刚才给出的定义，URL http://host/webAppPrefix/servlet/ServletName 可用于 http://host/webAppPrefix/servlet/FullyQualifiedName的场所。
 
-&ensp;&ensp;3.2 定义定制的URL
+#### 定义定制的URL
 
 &ensp;&ensp;&ensp;&ensp;大多数服务器具有一个缺省的serlvet URL：http://host/webAppPrefix/servlet/packageName.ServletName。虽然在开发中使用这个URL很方便，但是我们常常会希望另一个URL用于部署。例如，可能会需要一个出现在Web应用顶层的URL（如，http: //host/webAppPrefix/Anyname），并且在此URL中没有servlet项。位于顶层的URL简化了相对URL的使用。此外，对许多开发人员来说，顶层URL看上去比更长更麻烦的缺省URL更简短。  
 &ensp;&ensp;&ensp;&ensp;事实上，有时需要使用定制的URL。比如，你可能想关闭缺省URL映射，以便更好地强制实施安全限制或防止用户意外地访问无初始化参数的servlet。如果你禁止了缺省的URL，那么你怎样访问servlet呢？这时只有使用定制的URL了。  
@@ -171,7 +172,7 @@ http: //host/webAppPrefix/servlet/moreservlets.TestServlet。
 </servlet-mapping>
 ```
 
- 3.3 命名JSP页面  
+#### 命名JSP页面  
 &ensp;&ensp;&ensp;&ensp;因为JSP页面要转换成sevlet，自然希望就像命名servlet一样命名JSP页面。毕竟，JSP页面可能会从初始化参数、安全设置或定制的URL中受益，正如普通的serlvet那样。虽然JSP页面的后台实际上是servlet这句话是正确的，但存在一个关键的猜疑：即，你不知道JSP页面的实际类名（因为系统自己挑选这个名字）。因此，为了命名JSP页面，可将jsp-file元素替换为servlet-calss元素，如下所示：
 
 ```
@@ -182,7 +183,7 @@ http: //host/webAppPrefix/servlet/moreservlets.TestServlet。
 ```
 &ensp;&ensp;&ensp;&ensp;命名JSP页面的原因与命名servlet的原因完全相同：即为了提供一个与定制设置（如，初始化参数和安全设置）一起使用的名称，并且，以便能更改激活 JSP页面的URL（比方说，以便多个URL通过相同页面得以处理，或者从URL中去掉.jsp扩展名）。但是，在设置初始化参数时，应该注意，JSP页面是利用jspInit方法，而不是init方法读取初始化参数的。  
 
-4 禁止激活器servlet  
+### 禁止激活器servlet  
 
 &ensp;&ensp;&ensp;&ensp;对servlet或JSP页面建立定制URL的一个原因是，这样做可以注册从 init（servlet）或jspInit（JSP页面）方法中读取得初始化参数。但是，初始化参数只在是利用定制URL模式或注册名访问 servlet或JSP页面时可以使用，用缺省URL： http://host/webAppPrefix/servlet/ServletName 访问时不能使用。因此，你可能会希望关闭缺省URL，这样就不会有人意外地调用初始化servlet了。这个过程有时称为禁止激活器servlet，因为多数服务器具有一个用缺省的servlet URL注册的标准servlet，并激活缺省的URL应用的实际servlet。  
 
@@ -192,16 +193,16 @@ l 全局关闭激活器servlet。
 
 &ensp;&ensp;&ensp;&ensp;重要的是应该注意到，虽然重新映射每个Web应用中的/servlet/模式比彻底禁止激活servlet所做的工作更多，但重新映射可以用一种完全可移植的方式来完成。相反，全局禁止激活器servlet完全是针对具体机器的，事实上有的服务器（如ServletExec）没有这样的选择。下面的讨论对每个Web应用重新映射/servlet/ URL模式的策略。后面提供在Tomcat中全局禁止激活器servlet的详细内容。
 
-4.1 重新映射/servlet/URL模式  
+#### 重新映射/servlet/URL模式  
 
 &ensp;&ensp;&ensp;&ensp;在一个特定的Web应用中禁止以http://host/webAppPrefix/servlet/ 开始的URL的处理非常简单。所需做的事情就是建立一个错误消息servlet，并使用url-pattern元素将所有匹配请求转向该 servlet。只要简单地使用：
 <url-pattern>/servlet/*</url-pattern>
 作为servlet-mapping元素中的模式即可。  
 
-5 初始化和预装载servlet与JSP页面  
+### 初始化和预装载servlet与JSP页面  
 
 &ensp;&ensp;&ensp;&ensp;这里讨论控制servlet和JSP页面的启动行为的方法。特别是，说明了怎样分配初始化参数以及怎样更改服务器生存期中装载servlet和JSP页面的时刻。  
-5.1 分配servlet初始化参数  
+#### 分配servlet初始化参数  
 &ensp;&ensp;&ensp;&ensp;利用init-param元素向servlet提供初始化参数，init-param元素具有param-name和param-value子元素。  
 &ensp;&ensp;&ensp;&ensp;例如，在下面的例子中，如果initServlet servlet是利用它的注册名（InitTest）访问的，它将能够从其方法中调用getServletConfig(). getInitParameter("param1")获得"Value 1"，调用getServletConfig().getInitParameter("param2")获得"2"。
 
@@ -281,7 +282,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
 ```
 
 
-5.2 分配JSP初始化参数  
+#### 分配JSP初始化参数  
 
 &ensp;&ensp;&ensp;&ensp;给JSP页面提供初始化参数在三个方面不同于给servlet提供初始化参数。  
 &ensp;&ensp;&ensp;&ensp;1）使用jsp-file而不是servlet-class。因此，WEB-INF/web.xml文件的servlet元素如下所示：
@@ -364,7 +365,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
 </web-app>
 ```
 
-5.3 提供应用范围内的初始化参数  
+#### 提供应用范围内的初始化参数  
 &ensp;&ensp;&ensp;&ensp;一般，对单个地servlet或JSP页面分配初始化参数。指定的servlet或JSP页面利用ServletConfig的getInitParameter方法读取这些参数。但是，在某些情形下，希望提供可由任意servlet或JSP页面借助ServletContext的getInitParameter方法读取的系统范围内的初始化参数。  
 &ensp;&ensp;&ensp;&ensp;可利用context-param元素声明这些系统范围内的初始化值。context-param元素应该包含param-name、param-value以及可选的description子元素，如下所示：
 
@@ -376,7 +377,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
 ```
 
 &ensp;&ensp;&ensp;&ensp;为了保证可移植性，web.xml内的元素必须以正确的次序声明。但这里应该注意，context-param元素必须出现任意与文档有关的元素（icon、display-name或description）之后及filter、filter-mapping、listener或 servlet元素之前。  
-5.4 在服务器启动时装载servlet  
+#### 在服务器启动时装载servlet  
 &ensp;&ensp;&ensp;&ensp;假如servlet或JSP页面有一个要花很长时间执行的init （servlet）或jspInit（JSP）方法。例如，假如init或jspInit方法从某个数据库或ResourceBundle查找产量。这种情况下，在第一个客户机请求时装载servlet的缺省行为将对第一个客户机产生较长时间的延迟。因此，可利用servlet的load-on- startup元素规定服务器在第一次启动时装载servlet。下面是一个例子。
 
 ```
@@ -404,7 +405,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
 ```
 
 
-6 声明过滤器  
+### 声明过滤器  
 &ensp;&ensp;&ensp;&ensp;servlet版本2.3引入了过滤器的概念。虽然所有支持servlet API版本2.3的服务器都支持过滤器，但为了使用与过滤器有关的元素，必须在web.xml中使用版本2.3的DTD。  
 &ensp;&ensp;&ensp;&ensp;过滤器可截取和修改进入一个servlet或JSP页面的请求或从一个servlet或JSP页面发出的相应。在执行一个servlet或JSP页面之前，必须执行第一个相关的过滤器的doFilter方法。在该过滤器对其FilterChain对象调用doFilter时，执行链中的下一个过滤器。如果没有其他过滤器，servlet或JSP页面被执行。过滤器具有对到来的ServletRequest对象的全部访问权，因此，它们可以查看客户机名、查找到来的cookie等。为了访问servlet或JSP页面的输出，过滤器可将响应对象包裹在一个替身对象（stand-in object）中，比方说把输出累加到一个缓冲区。在调用FilterChain对象的doFilter方法之后，过滤器可检查缓冲区，如有必要，就对它进行修改，然后传送到客户机。  
 &ensp;&ensp;&ensp;&ensp;例如，一个简单的过滤器，只要访问相关的servlet或JSP页面，它就截取请求并在标准输出上打印一个报告（开发过程中在桌面系统上运行时，大多数服务器都可以使用这个过滤器）。
@@ -494,7 +495,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
 ```
 
 
-7 指定欢迎页  
+### 指定欢迎页  
 &ensp;&ensp;&ensp;&ensp;假如用户提供了一个像http: //host/webAppPrefix/directoryName/ 这样的包含一个目录名但没有包含文件名的URL，会发生什么事情呢？用户能得到一个目录表？一个错误？还是标准文件的内容？如果得到标准文件内容，是 index.html、index.jsp、default.html、default.htm或别的什么东西呢？
 Welcome-file-list 元素及其辅助的welcome-file元素解决了这个模糊的问题。例如，下面的web.xml项指出，如果一个URL给出一个目录名但未给出文件名，服务器应该首先试用index.jsp，然后再试用index.html。如果两者都没有找到，则结果有赖于所用的服务器（如一个目录列表）。
 
@@ -506,12 +507,12 @@ Welcome-file-list 元素及其辅助的welcome-file元素解决了这个模糊�
 ```
 
 &ensp;&ensp;&ensp;&ensp;虽然许多服务器缺省遵循这种行为，但不一定必须这样。因此，明确地使用welcom-file-list保证可移植性是一种良好的习惯。
-8 指定处理错误的页面  
+### 指定处理错误的页面  
 &ensp;&ensp;&ensp;&ensp;现在我了解到，你在开发servlet和JSP页面时从不会犯错误，而且你的所有页面是那样的清晰，一般的程序员都不会被它们的搞糊涂。但是，是人总会犯错误的，用户可能会提供不合规定的参数，使用不正确的URL或者不能提供必需的表单字段值。除此之外，其它开发人员可能不那么细心，他们应该有些工具来克服自己的不足。  
 &ensp;&ensp;&ensp;&ensp;error-page元素就是用来克服这些问题的。它有两个可能的子元素，分别是：error-code和exception- type。第一个子元素error-code指出在给定的HTTP错误代码出现时使用的URL。第二个子元素excpetion-type指出在出现某个给定的Java异常但未捕捉到时使用的URL。error-code和exception-type都利用location元素指出相应的URL。此 URL必须以/开始。location所指出的位置处的页面可通过查找HttpServletRequest对象的两个专门的属性来访问关于错误的信息，这两个属性分别是：javax.servlet.error.status_code和javax.servlet.error.message。  
 &ensp;&ensp;&ensp;&ensp;可回忆一下，在web.xml内以正确的次序声明web-app的子元素很重要。这里只要记住，error-page出现在web.xml文件的末尾附近，servlet、servlet-name和welcome-file-list之后即可。
  
-8.1 error-code元素  
+#### error-code元素  
 &ensp;&ensp;&ensp;&ensp;为了更好地了解error-code元素的值，可考虑一下如果不正确地输入文件名，大多数站点会作出什么反映。这样做一般会出现一个404错误信息，它表示不能找到该文件，但几乎没提供更多有用的信息。另一方面，可以试一下在http://www.microsoft.com/、http://www.ibm.com/ 处或者特别是在http://www.bea.com/ 处输出未知的文件名。这是会得出有用的消息，这些消息提供可选择的位置，以便查找感兴趣的页面。提供这样有用的错误页面对于Web应用来说是很有价值得。事实上rm-error-page子元素）。由form-login-page给出的HTML表单必须具有一个j_security_check的 ACTION属性、一个名为j_username的用户名文本字段以及一个名为j_password的口令字段。  
 &ensp;&ensp;&ensp;&ensp;例如，程序清单指示服务器使用基于表单的验证。Web应用的顶层目录中的一个名为login.jsp的页面将收集用户名和口令，并且失败的登陆将由相同目录中名为login-error.jsp的页面报告。
 
@@ -535,7 +536,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
 <!-- ... -->   
 </web-app>
 ```
-9.2 限制对Web资源的访问  
+#### 限制对Web资源的访问  
 &ensp;&ensp;&ensp;&ensp;现在，可以指示服务器使用何种验证方法了。"了不起，"你说道，"除非我能指定一个来收到保护的 URL，否则没有多大用处。"没错。指出这些URL并说明他们应该得到何种保护正是security-constriaint元素的用途。此元素在 web.xml中应该出现在login-config的紧前面。它包含四个可能的子元素，分别是：web-resource-collection、 auth-constraint、user-data-constraint和display-name。  
 
 l web-resource-collection  
@@ -598,7 +599,7 @@ l display-name
 
 &ensp;&ensp;&ensp;&ensp;security-constraint的这个很少使用的子元素给予可能由GUI工具使用的安全约束项一个名称。
  
-9.3 分配角色名  
+#### 分配角色名  
 
 &ensp;&ensp;&ensp;&ensp;迄今为止，讨论已经集中到完全由容器（服务器）处理的安全问题之上了。但servlet以及JSP页面也能够处理它们自己的安全问题。  
 &ensp;&ensp;&ensp;&ensp;例如，容器可能允许用户从bigwig或bigcheese角色访问一个显示主管人员额外紧贴的页面，但只允许bigwig用户修改此页面的参数。完成这种更细致的控制的一种常见方法是调用HttpServletRequset的isUserInRole方法，并据此修改访问。  
@@ -618,7 +619,7 @@ l display-name
 
 &ensp;&ensp;&ensp;&ensp;也可以在web-app内利用security-role元素提供将出现在role-name元素中的所有安全角色的一个全局列表。分别地生命角色使高级IDE容易处理安全信息。
  
-10 控制会话超时  
+### 控制会话超时  
 &ensp;&ensp;&ensp;&ensp;如果某个会话在一定的时间内未被访问，服务器可把它扔掉以节约内存。可利用HttpSession的setMaxInactiveInterval方法直接设置个别会话对象的超时值。如果不采用这种方法，则缺省的超时值由具体的服务器决定。但可利用session-config和session- timeout元素来给出一个适用于所有服务器的明确的超时值。超时值的单位为分钟，因此，下面的例子设置缺省会话超时值为三个小时（180分钟）。
 
 ```
@@ -629,7 +630,7 @@ l display-name
 
  
  
-11 Web应用的文档化  
+### Web应用的文档化  
 
 &ensp;&ensp;&ensp;&ensp;越来越多的开发环境开始提供servlet和JSP的直接支持。例子有Borland Jbuilder Enterprise Edition、Macromedia UltraDev、Allaire JRun Studio（写此文时，已被Macromedia收购）以及IBM VisuaAge for Java等。
 大量的web.xml元素不仅是为服务器设计的，而且还是为可视开发环境设计的。它们包括icon、display-name和discription等。  
@@ -663,7 +664,7 @@ This Web application represents the store developed for rare-books.com, an onlin
 </description>
 ```
 
-12 关联文件与MIME类型  
+### 关联文件与MIME类型  
 &ensp;&ensp;&ensp;&ensp;服务器一般都具有一种让Web站点管理员将文件扩展名与媒体相关联的方法。例如，将会自动给予名为mom.jpg的文件一个image/jpeg的MIME 类型。但是，假如你的Web应用具有几个不寻常的文件，你希望保证它们在发送到客户机时分配为某种MIME类型。mime-mapping元素（具有 extension和mime-type子元素）可提供这种保证。例如，下面的代码指示服务器将application/x-fubar的MIME类型分配给所有以.foo结尾的文件。
 
 ```
@@ -683,7 +684,7 @@ This Web application represents the store developed for rare-books.com, an onlin
 ```
  
  
-13 定位TLD  
+### 定位TLD  
 &ensp;&ensp;&ensp;&ensp;JSP taglib元素具有一个必要的uri属性，它给出一个TLD（Tag Library Descriptor）文件相对于Web应用的根的位置。TLD文件的实际名称在发布新的标签库版本时可能会改变，但我们希望避免更改所有现有JSP页面。此外，可能还希望使用保持taglib元素的简练性的一个简短的uri。这就是部署描述符文件的taglib元素派用场的所在了。Taglib包含两个子元素：taglib-uri和taglib-location。taglib-uri元素应该与用于JSP taglib元素的uri属性的东西相匹配。Taglib-location元素给出TLD文件的实际位置。例如，假如你将文件chart-tags- 1.3beta.tld放在WebApp/WEB-INF/tlds中。现在，假如web.xml在web-app元素内包含下列内容。
 
 ```
@@ -744,7 +745,7 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
 </web-app>
 ```
 
-15 J2EE元素  
+### J2EE元素  
 &ensp;&ensp;&ensp;&ensp;本节描述用作J2EE环境组成部分的Web应用的web.xml元素，这里将提供一个简明的介绍。  
 
 

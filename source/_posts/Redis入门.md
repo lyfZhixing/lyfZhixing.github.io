@@ -7,9 +7,12 @@ categories:
 - 数据库  
 - Redis
 ---
-> 配置连接池  
+
+## 初识Redis  
+以前只是了解过redis并未实际用过，现在准备学习一下，demo地址：<https://github.com/lyfZhixing/redisDemo> 
 
 <!-- more --> 
+### 配置连接池 
 ```
 package com.redis.demo;
 
@@ -92,13 +95,14 @@ public final class RedisPool {
     }
 }
 ```
-- 注意事项
+#### 注意事项
 1. setMaxActive和setMaxWait在新的包中已被移除由下面两个方法替换:  
 pool2中修改如下：
 maxActive  ==>  maxTotal
 maxWait ==> maxWaitMillis   
 2. jedisPool.returnResource(jedis);方法已过时，由jedis.close();替换  
-> Redis五种数据类型的基本操作  
+
+### Redis五种数据类型的基本操作  
 
 ```
 package com.redis.demo;
@@ -410,7 +414,7 @@ public class Operate {
 }
 
 ```  
-> 测试类  
+### 测试类  
 
 ```
 package com.redis.demo;

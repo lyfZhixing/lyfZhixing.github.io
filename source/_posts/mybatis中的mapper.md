@@ -7,8 +7,9 @@ categories:
 - 配置文件
 ---
 mybatis与spring整合时常遇到的问题  
-<!-- more -->   
- ##### mapper.xml中容易出错的方法和区别:  
+<!-- more --> 
+
+## mapper.xml中容易出错的方法和区别:  
 1. selectByExample和selectByExampleWithBLOBs的区别(包含Example的使用)：  
  如果想要搜索结果包含大字段类型，则必须使用selectByExampleWithBLOBs。无需检索大字段，则使用selectByExample；  
 2. insertSelective和insert的区别：  
@@ -25,7 +26,7 @@ updateByPrimaryKeySelective　
 如果record定义了两个字段，其中有一个字段是主键，数据库共4个字段，则根据主键修改数据库的两个字段，其余两个字段不动；  
 updateByPrimaryKeyWithBLOBs和updateByPrimaryKey相比此方法可以修改大字段类型，其余性质和updateByPrimaryKey相同   
 
- ##### Mapper.xml语句中parameterType向SQL语句传参的两种方式：#{}和${}  
+## Mapper.xml语句中parameterType向SQL语句传参的两种方式：#{}和${}  
 经常使用的是#{},因为这种方式可以防止SQL注入，#{}这种方式SQL语句是经过预编译的，把#{}中间的参数转义成字符串，举个例子：  
 
 
@@ -54,14 +55,14 @@ $方式无法防止Sql注入。
 $方式一般用于传入数据库对象，例如传入表名.  
 一般能用#的就别用$.  
 
- ##### mybatis与spring整合中service层的空指针异常  
+## mybatis与spring整合中service层的空指针异常  
 1. controller层实例化service会出现空指针，应该用@Autowired自动装配注入service；  
 2. service层实现类中也要用@Autowired注入mapper；    
 
- ##### Failed to convert value of type 'java.lang.String' to required type 'java.util.Date';  
+## Failed to convert value of type 'java.lang.String' to required type 'java.util.Date';  
 发生这一错误的主要原因是Controller类中需要接收的是Date类型，但是在页面端传过来的是String类型，最终导致了这个错误。
 这里提供两种解决方案，一种是局部转换，一种是全局转换。  
-- 局部转换  
+### 局部转换  
 ```
 @RequestMapping("/updateItems")
 	public ModelAndView updateItems(Date createtime){
@@ -82,7 +83,7 @@ $方式一般用于传入数据库对象，例如传入表名.
 	        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));// CustomDateEditor为自定义日期编辑器  
 	    }  
 ```  
-- 全局转换  
+### 全局转换  
 1. 创建CustomDate类实现WebBindingInitializer  
 ```
 public class CustomDate implements WebBindingInitializer{  

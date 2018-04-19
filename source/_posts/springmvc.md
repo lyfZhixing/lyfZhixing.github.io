@@ -5,7 +5,7 @@ tags: [spring,springMVC]
 categories: 
 - 框架 
 ---
-最近做毕业设计用到springMVC，在做项目的过程中顺便总结一下springMVC的知识点  
+最近做毕业设计用到springMVC，在做项目的过程中顺便总结一下springMVC的知识点，项目地址：<https://github.com/lyfZhixing/adoptPet>  
  <!-- more -->  
  > 注意:spring3.x与jdk 8不兼容会报错（以前踩过的坑） 
 本次做毕设用到的版本为：spring4.x,jdk 8,mybatis 3.x 
