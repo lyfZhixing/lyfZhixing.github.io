@@ -63,6 +63,7 @@ $方式一般用于传入数据库对象，例如传入表名.
 发生这一错误的主要原因是Controller类中需要接收的是Date类型，但是在页面端传过来的是String类型，最终导致了这个错误。
 这里提供两种解决方案，一种是局部转换，一种是全局转换。  
 ### 局部转换  
+
 ```
 @RequestMapping("/updateItems")
 	public ModelAndView updateItems(Date createtime){
@@ -82,22 +83,28 @@ $方式一般用于传入数据库对象，例如传入表名.
 	        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 	        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));// CustomDateEditor为自定义日期编辑器  
 	    }  
-```  
-### 全局转换  
-1. 创建CustomDate类实现WebBindingInitializer  
 ```
-public class CustomDate implements WebBindingInitializer{  
-  
-    @Override  
-    public void initBinder(WebDataBinder binder, WebRequest request) {  
-        // TODO Auto-generated method stub  
-        //转换日期  
-        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));  
-    }  
-}  
-```  
+
+
+### 全局转换  
+
+1. 创建CustomDate类实现WebBindingInitializer  
+
+
+```
+public class CustomDate implements WebBindingInitializer{ 
+	    @Override  
+	    public void initBinder(WebDataBinder binder, WebRequest request) {  
+	        // TODO Auto-generated method stub  
+	        //转换日期  
+	        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+	        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));  
+	    }  
+	}  
+```
+
 2. 在Spring-MVC.xml中配置日期转换  
+
 ```
 	<!-- 日期转换 -->  
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
@@ -106,3 +113,4 @@ public class CustomDate implements WebBindingInitializer{
         </property>  
     </bean>  
 ```
+
