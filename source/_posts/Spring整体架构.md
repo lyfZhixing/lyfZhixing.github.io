@@ -11,7 +11,7 @@ java 后台开发无论如何都是绕不过Spring的，其核心是IOC和AOP。
 [TOC]  
 
 ## 【整体架构】      
-![image](/images/spring.webp "spring架构")      
+![image](https://raw.githubusercontent.com/lyfZhixing/lyfZhixing.github.io/hexo/images/spring.jpg "spring架构")      
 ## 【核心容器】     
 spring-core、spring-beans、spring-context、spring-context-support和spring-expression共同组成spring的核心容器。  
 
