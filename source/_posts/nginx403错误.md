@@ -38,8 +38,8 @@ ps aux | grep "nginx: worker process" | awk '{print $1}'
 
 2.2 - 没有index.html，index.htm等默认启动页，注意路径   
 2.3 - 权限问题，nginx没有操作项目目录的权限  
-2.3.1 - 修改项目目录的读写权限，使用chmod命令
-2.3.2 - 把nginx的启动用户修改为目录所属用户   
+2.3.1 - 修改项目目录的读写权限，使用chmod命令     
+2.3.2 - 把nginx的启动用户修改为目录所属用户        
 2.3.3 - 换启动用户有权限操作的目录  
 2.4 - SELinux设置为开启状态（enabled）的原因。  
 2.4.1 - 查看当前selinux的状态。  
