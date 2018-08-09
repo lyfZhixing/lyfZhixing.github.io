@@ -107,15 +107,15 @@
 <meta property="og:site_name" content="小知行的博客">
 <meta property="og:description" content="GIT （分布式版本控制系统） 以前一直用GitHub for Windows 提交代码，都在图形界面操作。现在练习使用git命令来进行远程仓库拉取、本地仓库更新、工作空间提交等等（图一简要的描述了git工作的流程）。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/git工作示意图.png">
+<meta property="og:image" content="https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/git工作示意图.png?raw=true">
 <meta property="og:image" content="http://yoursite.com/images/git-clone.png">
 <meta property="og:image" content="http://yoursite.com/images/git-clone2.png">
 <meta property="og:image" content="http://yoursite.com/images/git-add.png">
-<meta property="og:updated_time" content="2018-08-06T14:25:00.503Z">
+<meta property="og:updated_time" content="2018-08-09T13:29:58.931Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git命令">
 <meta name="twitter:description" content="GIT （分布式版本控制系统） 以前一直用GitHub for Windows 提交代码，都在图形界面操作。现在练习使用git命令来进行远程仓库拉取、本地仓库更新、工作空间提交等等（图一简要的描述了git工作的流程）。">
-<meta name="twitter:image" content="http://yoursite.com/images/git工作示意图.png">
+<meta name="twitter:image" content="https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/git工作示意图.png?raw=true">
 
 
 
@@ -400,7 +400,7 @@
 
       
         <blockquote>
-<p><strong>GIT （分布式版本控制系统）</strong><br> 以前一直用GitHub for Windows 提交代码，都在图形界面操作。现在练习使用git命令来进行远程仓库拉取、本地仓库更新、工作空间提交等等（图一简要的描述了git工作的流程）。<br><a id="more"></a><br><img src="/images/git工作示意图.png" alt="image"><br><em>++图一++</em>  </p>
+<p><strong>GIT （分布式版本控制系统）</strong><br> 以前一直用GitHub for Windows 提交代码，都在图形界面操作。现在练习使用git命令来进行远程仓库拉取、本地仓库更新、工作空间提交等等（图一简要的描述了git工作的流程）。<br><a id="more"></a><br><img src="https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/git工作示意图.png?raw=true" alt="image" title="git"><br><em>++图一++</em>  </p>
 </blockquote>
 <h5 id="从GitHub-com克隆项目，复制ssh地址："><a href="#从GitHub-com克隆项目，复制ssh地址：" class="headerlink" title="- 从GitHub.com克隆项目，复制ssh地址："></a>- 从GitHub.com克隆项目，复制ssh地址：</h5><p><img src="/images/git-clone.png" alt="image"><br><em>++图二++</em><br>命令窗口cd 到在本地工作空间地址，输入命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone ~~ssh地址~~</span><br></pre></td></tr></table></figure></p>
 <p><img src="/images/git-clone2.png" alt="image"><br><em>++图三++</em>  </p>
@@ -425,11 +425,16 @@
 <blockquote>
 <p>覆盖更新本地<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard，移除所有未提交的本地改动。</span><br><span class="line">git fetch &amp;&amp; git reset --hard origin/master，使用github上的仓库覆盖本地，本地提交的也会被移除。</span><br><span class="line">用之前建议先备份。  </span><br><span class="line">除了git reset --hard，  </span><br><span class="line">也可以考虑使用git checkout . 撤销所有文件的修改（新增或删除文件无效）  </span><br><span class="line">git checkout [特定文件路径]针对某些文件撤销修改，多个路径以空格隔开。</span><br><span class="line">另外需注意如果你已经git commit了的话就不能使用checkout了。</span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<h5 id="分支操作"><a href="#分支操作" class="headerlink" title="- 分支操作"></a>- 分支操作</h5><pre><code>git branch -a 列出所有分支，当前分支前边有星号表示
-git branch 查看本地分支
-git branch dev 创建dev
-git checkout dev 切换到dev分支
-</code></pre>
+<h5 id="分支操作"><a href="#分支操作" class="headerlink" title="- 分支操作"></a>- 分支操作</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git branch -a 列出所有分支，当前分支前边有星号表示</span><br><span class="line">git branch 查看本地分支</span><br><span class="line">git branch dev 创建dev</span><br><span class="line">git checkout dev 切换到dev分支</span><br><span class="line">```   </span><br><span class="line"></span><br><span class="line">##### - 修改历史提交massage（未push）      </span><br><span class="line"></span><br><span class="line">1. 查询git commit日志</span><br></pre></td></tr></table></figure>
+<pre><code>git log --oneline -3     //查询最近提交的3条日志，commitid为简短id
+</code></pre>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitlog.png?raw=true &quot;git log&quot;)   </span><br><span class="line">   图 -- gitlog</span><br><span class="line"></span><br><span class="line">2. 若要修改上一次提交的massage直接使用amend</span><br></pre></td></tr></table></figure>
+<p>   git commit –amend<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   会弹出修改页面，编辑完成之后，^X退出保存，使用git log查看是否修改成功 </span><br><span class="line">3. 若要修改历史提交的massage，按一下步骤来</span><br></pre></td></tr></table></figure></p>
+<pre><code>git rebase -i commitid       //commitid为要修改的commit的下一条提交的id如下图所示
+</code></pre><p>   //即要修改第二条commit的msg，需要地三条commit的id，修改第一条需要第二条的id，以此类推<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitrebase.png?raw=true &quot;rebase命令&quot;)    </span><br><span class="line">   图 --修改第一条commit的msg（commitid参考图gitlog）    </span><br><span class="line"></span><br><span class="line">4. 修改msg，如图所示：    </span><br><span class="line">   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitpick.png?raw=true &quot;pick&quot;)    </span><br><span class="line">   |    |     </span><br><span class="line">   |    |     </span><br><span class="line">   |    |    </span><br><span class="line">   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitreword.png?raw=true &quot;reword&quot;)      </span><br><span class="line">   |    |     </span><br><span class="line">   |    |     </span><br><span class="line">   |    |      </span><br><span class="line">   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitmassage.png?raw=true &quot;git massage&quot;)      </span><br><span class="line">   |    |     </span><br><span class="line">   |    |     </span><br><span class="line">   |    |    </span><br><span class="line">   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitmassage2.png?raw=true &quot;git msg2&quot;)    </span><br><span class="line">   |    |     </span><br><span class="line">   |    |     </span><br><span class="line">   |    |    </span><br><span class="line">   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitmassage3.png?raw=true &quot;git msg3&quot;)    </span><br><span class="line">   |    |     </span><br><span class="line">   |    |     </span><br><span class="line">   |    |    </span><br><span class="line">   修改完毕。  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">##### - git 删除已经提交只远程仓库的文件     </span><br><span class="line">删除远程不删除本地（推荐）</span><br></pre></td></tr></table></figure></p>
+<p>git rm –cached -r 文件夹或文件名<br>git commit -m “msg”<br>git push</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">远程和本地一块删（不推荐）</span><br></pre></td></tr></table></figure>
+<p>git rm -r 文件夹或文件名<br>git commit -m “msg”<br>git push<br><code>`</code></p>
+
       
     </div>
 
@@ -552,7 +557,7 @@ git checkout dev 切换到dev分支
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -652,7 +657,11 @@ git checkout dev 切换到dev分支
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

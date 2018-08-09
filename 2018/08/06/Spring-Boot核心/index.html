@@ -99,18 +99,18 @@
 
 
 
-  <meta name="description" content="- 基本配置- 启动入口Spring Boot通常有一个入口类，*Application.java，运行该类中的main方法即可启动项目。在入口类可以使用@SpringBootApplication注解进行配置，也可以使用@Configuration、@EnableAutoConfiguration和@ComponentScan组合进行注解配置。@EnableAutoConfiguration让S">
+  <meta name="description" content="- 基本配置- 启动入口Spring Boot通常有一个入口类，*Application.java，运行该类中的main方法即可启动项目。在入口类可以使用@SpringBootApplication注解进行配置，也可以使用@Configuration、@EnableAutoConfiguration和@ComponentScan组合进行注解配置。@EnableAutoConfigura">
 <meta name="keywords" content="spring,Spring Boot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Boot核心">
 <meta property="og:url" content="http://yoursite.com/2018/08/06/Spring-Boot核心/index.html">
 <meta property="og:site_name" content="小知行的博客">
-<meta property="og:description" content="- 基本配置- 启动入口Spring Boot通常有一个入口类，*Application.java，运行该类中的main方法即可启动项目。在入口类可以使用@SpringBootApplication注解进行配置，也可以使用@Configuration、@EnableAutoConfiguration和@ComponentScan组合进行注解配置。@EnableAutoConfiguration让S">
+<meta property="og:description" content="- 基本配置- 启动入口Spring Boot通常有一个入口类，*Application.java，运行该类中的main方法即可启动项目。在入口类可以使用@SpringBootApplication注解进行配置，也可以使用@Configuration、@EnableAutoConfiguration和@ComponentScan组合进行注解配置。@EnableAutoConfigura">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-06T14:25:00.484Z">
+<meta property="og:updated_time" content="2018-08-09T13:29:58.922Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot核心">
-<meta name="twitter:description" content="- 基本配置- 启动入口Spring Boot通常有一个入口类，*Application.java，运行该类中的main方法即可启动项目。在入口类可以使用@SpringBootApplication注解进行配置，也可以使用@Configuration、@EnableAutoConfiguration和@ComponentScan组合进行注解配置。@EnableAutoConfiguration让S">
+<meta name="twitter:description" content="- 基本配置- 启动入口Spring Boot通常有一个入口类，*Application.java，运行该类中的main方法即可启动项目。在入口类可以使用@SpringBootApplication注解进行配置，也可以使用@Configuration、@EnableAutoConfiguration和@ComponentScan组合进行注解配置。@EnableAutoConfigura">
 
 
 
@@ -394,9 +394,21 @@
       
 
       
-        <h2 id="基本配置"><a href="#基本配置" class="headerlink" title="- 基本配置"></a>- 基本配置</h2><h3 id="启动入口"><a href="#启动入口" class="headerlink" title="- 启动入口"></a>- 启动入口</h3><p>Spring Boot通常有一个入口类，*Application.java，运行该类中的main方法即可启动项目。<br>在入口类可以使用@SpringBootApplication注解进行配置，也可以使用@Configuration、@EnableAutoConfiguration和@ComponentScan组合进行注解配置。<br>@EnableAutoConfiguration让Spring Boot根据类路径中的jar包依赖为当前项目进行自动配置<br>使用@SpringBootApplication注解exclude参数可以关闭特定的自动配置  </p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="- 配置文件"></a>- 配置文件</h3><p>在src/main/resources目录下或根路径/config下，使用一个全局配置文件application.properties或Application.yml。<br>举个小栗子： （修改Tomcat的默认端口8080为8090，并将默认的访问路径”/“修改为”/helloboot”）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Application.properties:   </span><br><span class="line">server.port=8090   </span><br><span class="line">server.context-path=/helloboot   </span><br><span class="line">   </span><br><span class="line">application.yml:    </span><br><span class="line">server:   </span><br><span class="line">    port: 8090   </span><br><span class="line">    context-path: /helloboot </span><br><span class="line">```   </span><br><span class="line">   </span><br><span class="line">### - Starter pom    </span><br><span class="line">官方提供spring-boot-starter : Spring Boot 核心starter，包含自动配置、日志、yaml配置文件的支持  </span><br><span class="line">和spring-boot-starter-*等starter   </span><br><span class="line">    </span><br><span class="line">### - xml配置   </span><br><span class="line">虽然Spring Boot提倡零配置，但在实际项目中，还是会有一些特殊的需求需要使用xml配置，可以通过Spring的@ImportResource来加载配置。</span><br></pre></td></tr></table></figure></p>
+        <a id="more"></a>     
+<h2 id="基本配置"><a href="#基本配置" class="headerlink" title="- 基本配置"></a>- 基本配置</h2><h3 id="启动入口"><a href="#启动入口" class="headerlink" title="- 启动入口"></a>- 启动入口</h3><p>Spring Boot通常有一个入口类，*Application.java，运行该类中的main方法即可启动项目。<br>在入口类可以使用@SpringBootApplication注解进行配置，也可以使用@Configuration、@EnableAutoConfiguration和@ComponentScan组合进行注解配置。<br>@EnableAutoConfiguration让Spring Boot根据类路径中的jar包依赖为当前项目进行自动配置<br>使用@SpringBootApplication注解exclude参数可以关闭特定的自动配置  </p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="- 配置文件"></a>- 配置文件</h3><p>在src/main/resources目录下或根路径/config下，使用一个全局配置文件application.properties或Application.yml。<br>举个小栗子： （修改Tomcat的默认端口8080为8090，并将默认的访问路径”/“修改为”/helloboot”）     </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Application.properties:   </span><br><span class="line">server.port=8090   </span><br><span class="line">server.context-path=/helloboot   </span><br><span class="line">   </span><br><span class="line">application.yml:    </span><br><span class="line">server:   </span><br><span class="line">    port: 8090   </span><br><span class="line">    context-path: /helloboot </span><br><span class="line">```   </span><br><span class="line">  </span><br><span class="line">### - Starter pom    </span><br><span class="line">官方提供spring-boot-starter : Spring Boot 核心starter，包含自动配置、日志、yaml配置文件的支持  </span><br><span class="line">和spring-boot-starter-*等starter   </span><br><span class="line">    </span><br><span class="line">### - xml配置   </span><br><span class="line">虽然Spring Boot提倡零配置，但在实际项目中，还是会有一些特殊的需求需要使用xml配置，可以通过Spring的@ImportResource来加载配置。</span><br></pre></td></tr></table></figure>
 <p>@ImportResource({“classpath:some-context.xml”,”classpath:another-context.xml”})<br><code>`</code>   </p>
+<h2 id="Spring-Boot配置属性的加载顺序"><a href="#Spring-Boot配置属性的加载顺序" class="headerlink" title="- Spring Boot配置属性的加载顺序"></a>- Spring Boot配置属性的加载顺序</h2><ol>
+<li>在命令行中传入的参数；   </li>
+<li>SPRING——APPLICATION——JSON中的属性。SPRING——APPLICATION——JSON是以JSON格式配置在系统环境变量中的内容；    </li>
+<li>java:comp/env中的JNDI配置；    </li>
+<li>Java的系统属性，可以通过System.getProperties()获得的内容；    </li>
+<li>操作系统的环境变量；       </li>
+<li>通过random.*配置的随机属性；    </li>
+<li>位于当前应用jar包之外，针对不同{profile}环境的配置文件内容，例如application-{profile}.properties或是YAML定义的配置文件；     </li>
+<li>未完待续……     <h2 id="spring-boot中的监控与管理"><a href="#spring-boot中的监控与管理" class="headerlink" title="spring boot中的监控与管理"></a>spring boot中的监控与管理</h2>actuator模块</li>
+</ol>
 
       
     </div>
@@ -441,6 +453,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/07/Linux免密登录/" rel="prev" title="Linux免密登录">
+                Linux免密登录 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -518,7 +534,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -618,7 +634,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -654,7 +674,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本配置"><span class="nav-number">1.</span> <span class="nav-text">- 基本配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动入口"><span class="nav-number">1.1.</span> <span class="nav-text">- 启动入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件"><span class="nav-number">1.2.</span> <span class="nav-text">- 配置文件</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本配置"><span class="nav-number">1.</span> <span class="nav-text">- 基本配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动入口"><span class="nav-number">1.1.</span> <span class="nav-text">- 启动入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件"><span class="nav-number">1.2.</span> <span class="nav-text">- 配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Boot配置属性的加载顺序"><span class="nav-number">2.</span> <span class="nav-text">- Spring Boot配置属性的加载顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spring-boot中的监控与管理"><span class="nav-number">3.</span> <span class="nav-text">spring boot中的监控与管理</span></a></li></ol></div>
             
 
           </div>
