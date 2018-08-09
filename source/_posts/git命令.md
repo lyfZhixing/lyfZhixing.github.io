@@ -77,5 +77,51 @@ git branch dev 创建dev
 git checkout dev 切换到dev分支
 ```   
 
+##### - 修改历史提交massage（未pull）      
+
+1. 查询git commit日志  
+   ```
+    git log --oneline -3     //查询最近提交的3条日志，commitid为简短id
+   ```     
+   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitlog.png?raw=true "git log")   
+   图 -- gitlog
+
+2. 若要修改上一次提交的massage直接使用amend    
+   ```
+   git commit --amend
+   ```
+   会弹出修改页面，编辑完成之后，^X退出保存，使用git log查看是否修改成功 
+3. 若要修改历史提交的massage，按一下步骤来     
+   ```
+    git rebase -i commitid       //commitid为要修改的commit的下一条提交的id如下图所示
+   //即要修改第二条commit的msg，需要地三条commit的id，修改第一条需要第二条的id，以此类推
+   ```     
+   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitrebase.png?raw=true "rebase命令")    
+   图 --修改第一条commit的msg（commitid参考图gitlog）    
+
+4. 修改msg，如图所示：    
+   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitpick.png?raw=true "pick")    
+   |    |     
+   |    |     
+   |    |    
+   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitreword.png?raw=true "reword")      
+   |    |     
+   |    |     
+   |    |      
+   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitmassage.png?raw=true "git massage")      
+   |    |     
+   |    |     
+   |    |    
+   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitmassage2.png?raw=true "git msg2")    
+   |    |     
+   |    |     
+   |    |    
+   ![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/gitmassage3.png?raw=true "git msg3")    
+   |    |     
+   |    |     
+   |    |    
+   修改完毕。 
+
+
 
 

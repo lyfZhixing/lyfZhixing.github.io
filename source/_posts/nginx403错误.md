@@ -11,7 +11,8 @@ sudo apt install nginx
 service nginx start  
 3.编辑欢迎页  
 cd /var/www/html/  
-sudo vi index.nginx-debian.html   
+sudo vi index.nginx-debian.html    
+<!-- more -->       
 ## 将项目部署至nginx(前端)   
 1.打包项目，只用dist文件夹   
 2.找到nginx.conf文件，配置server如下图所示     

@@ -7,7 +7,8 @@ categories：
 - 自动部署
 ---
 ## - 自动部署的流程    
-![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/Jenkins.png?raw=true "Jenkins自动部署") 
+![image](https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/Jenkins.png?raw=true "Jenkins自动部署")    
+<!-- more -->     
 ## - 前端项目使用Jenkins+git自动部署   
 1.从git上拉取项目   
 2.命令构建   
