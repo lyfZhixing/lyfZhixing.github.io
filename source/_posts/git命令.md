@@ -77,7 +77,7 @@ git branch dev 创建dev
 git checkout dev 切换到dev分支
 ```   
 
-##### - 修改历史提交massage（未pull）      
+##### - 修改历史提交massage（未push）      
 
 1. 查询git commit日志  
    ```
@@ -120,8 +120,22 @@ git checkout dev 切换到dev分支
    |    |     
    |    |     
    |    |    
-   修改完毕。 
+   修改完毕。  
 
 
+##### - git 删除已经提交只远程仓库的文件     
+删除远程不删除本地（推荐）  
+```
+git rm --cached -r 文件夹或文件名
+git commit -m "msg"
+git push
+
+```
+远程和本地一块删（不推荐）    
+```
+git rm -r 文件夹或文件名
+git commit -m "msg"
+git push
+```
 
 
