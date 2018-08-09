@@ -47,6 +47,10 @@ server:
 5. 操作系统的环境变量；       
 6. 通过random.*配置的随机属性；    
 7. 位于当前应用jar包之外，针对不同{profile}环境的配置文件内容，例如application-{profile}.properties或是YAML定义的配置文件；     
-8. 未完待续……     
+8. 位于当前应用jar包之内，针对不同{profile}环境的配置文件内容，例如application-{profile}.properties或是YAML定义的配置文件；     
+9. 位于当前应用jar包之外的application.properties和YAML配置内容；    
+10. 位于当前应用jar包之外的application.properties和YAML配置内容；         
+11. 在@Configuration注解修改的类中，通过@PropertySource注解定义的属性；    
+12. 应用默认属性，使用SpringApplication.setDefaultProperties定义的内容     
 ## spring boot中的监控与管理    
 actuator模块
