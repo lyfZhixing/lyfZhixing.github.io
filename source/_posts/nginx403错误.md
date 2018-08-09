@@ -43,16 +43,17 @@ ps aux | grep "nginx: worker process" | awk '{print $1}'
 2.3.2 - 把nginx的启动用户修改为目录所属用户        
 2.3.3 - 换启动用户有权限操作的目录  
 2.4 - SELinux设置为开启状态（enabled）的原因。  
-2.4.1 - 查看当前selinux的状态。  
+2.4.1 - 查看当前selinux的状态。    
+
 ```
 /usr/sbin/sestatus  
-```    
-2.4.2 - 将SELINUX=enforcing 修改为 SELINUX=disabled 状态。  
+```      
+
+2.4.2 - 将SELINUX=enforcing 修改为 SELINUX=disabled 状态。    
+ 
 ```
 vi /etc/selinux/config
-
 #SELINUX=enforcing
-
 SELINUX=disabled
 ```    
 2.4.3 -   重启生效。reboot
