@@ -661,7 +661,11 @@
 <li>操作系统的环境变量；       </li>
 <li>通过random.*配置的随机属性；    </li>
 <li>位于当前应用jar包之外，针对不同{profile}环境的配置文件内容，例如application-{profile}.properties或是YAML定义的配置文件；     </li>
-<li>未完待续……     <h2 id="spring-boot中的监控与管理"><a href="#spring-boot中的监控与管理" class="headerlink" title="spring boot中的监控与管理"></a>spring boot中的监控与管理</h2>actuator模块</li>
+<li>位于当前应用jar包之内，针对不同{profile}环境的配置文件内容，例如application-{profile}.properties或是YAML定义的配置文件；     </li>
+<li>位于当前应用jar包之外的application.properties和YAML配置内容；    </li>
+<li>位于当前应用jar包之外的application.properties和YAML配置内容；         </li>
+<li>在@Configuration注解修改的类中，通过@PropertySource注解定义的属性；    </li>
+<li>应用默认属性，使用SpringApplication.setDefaultProperties定义的内容     <h2 id="spring-boot中的监控与管理"><a href="#spring-boot中的监控与管理" class="headerlink" title="spring boot中的监控与管理"></a>spring boot中的监控与管理</h2>actuator模块</li>
 </ol>
 
           

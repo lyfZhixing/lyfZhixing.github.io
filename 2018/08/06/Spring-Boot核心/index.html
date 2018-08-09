@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="小知行的博客">
 <meta property="og:description" content="- 基本配置- 启动入口Spring Boot通常有一个入口类，*Application.java，运行该类中的main方法即可启动项目。在入口类可以使用@SpringBootApplication注解进行配置，也可以使用@Configuration、@EnableAutoConfiguration和@ComponentScan组合进行注解配置。@EnableAutoConfigura">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-09T13:29:58.922Z">
+<meta property="og:updated_time" content="2018-08-09T13:56:02.033Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Boot核心">
 <meta name="twitter:description" content="- 基本配置- 启动入口Spring Boot通常有一个入口类，*Application.java，运行该类中的main方法即可启动项目。在入口类可以使用@SpringBootApplication注解进行配置，也可以使用@Configuration、@EnableAutoConfiguration和@ComponentScan组合进行注解配置。@EnableAutoConfigura">
@@ -407,7 +407,11 @@
 <li>操作系统的环境变量；       </li>
 <li>通过random.*配置的随机属性；    </li>
 <li>位于当前应用jar包之外，针对不同{profile}环境的配置文件内容，例如application-{profile}.properties或是YAML定义的配置文件；     </li>
-<li>未完待续……     <h2 id="spring-boot中的监控与管理"><a href="#spring-boot中的监控与管理" class="headerlink" title="spring boot中的监控与管理"></a>spring boot中的监控与管理</h2>actuator模块</li>
+<li>位于当前应用jar包之内，针对不同{profile}环境的配置文件内容，例如application-{profile}.properties或是YAML定义的配置文件；     </li>
+<li>位于当前应用jar包之外的application.properties和YAML配置内容；    </li>
+<li>位于当前应用jar包之外的application.properties和YAML配置内容；         </li>
+<li>在@Configuration注解修改的类中，通过@PropertySource注解定义的属性；    </li>
+<li>应用默认属性，使用SpringApplication.setDefaultProperties定义的内容     <h2 id="spring-boot中的监控与管理"><a href="#spring-boot中的监控与管理" class="headerlink" title="spring boot中的监控与管理"></a>spring boot中的监控与管理</h2>actuator模块</li>
 </ol>
 
       

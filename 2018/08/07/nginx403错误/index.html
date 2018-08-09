@@ -109,7 +109,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/nginx.png?raw=true">
 <meta property="og:image" content="https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/nginx403.png?raw=true">
-<meta property="og:updated_time" content="2018-08-09T13:29:58.933Z">
+<meta property="og:updated_time" content="2018-08-09T13:43:48.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx403错误">
 <meta name="twitter:description" content="安装nginx环境1.安装：sudo apt install nginx2.启动：service nginx start3.编辑欢迎页cd /var/www/html/sudo vi index.nginx-debian.html">
@@ -378,10 +378,10 @@
 <p>某些版本可能不在nginx.conf文件中配置，但是可以从外部引入。<br>3.重新加载nginx配置：<br>sudo nginx -s reload<br>4.重启nginx：<br>service nginx restart<br>5.在浏览器输入localhost:8090(就上图中的配置而言)，即可进行访问   </p>
 <h2 id="nginx浏览器报403错误"><a href="#nginx浏览器报403错误" class="headerlink" title="nginx浏览器报403错误"></a>nginx浏览器报403错误</h2><p>1.查看日志，/var/log/nginx/error.log,报错：Permission denied<br>2.错误原因可以从下面四步进行排查<br>2.1 - 查看nginx的启动用户和使用用户是否一致，一般默认用户并不是root<br>2.1.1 - 运行命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep &quot;nginx: worker process&quot; | awk &apos;&#123;print $1&#125;&apos;</span><br></pre></td></tr></table></figure></p>
 <p>2.1.2 - 修改nginx.conf中的user和使用用户一致，即修改为本机用户名<br><img src="https://github.com/lyfZhixing/lyfZhixing.github.io/blob/hexo/images/nginx403.png?raw=true" alt="image" title="nginx配置">    </p>
-<p>2.2 - 没有index.html，index.htm等默认启动页，注意路径<br>2.3 - 权限问题，nginx没有操作项目目录的权限<br>2.3.1 - 修改项目目录的读写权限，使用chmod命令<br>2.3.2 - 把nginx的启动用户修改为目录所属用户<br>2.3.3 - 换启动用户有权限操作的目录<br>2.4 - SELinux设置为开启状态（enabled）的原因。<br>2.4.1 - 查看当前selinux的状态。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/sestatus  </span><br><span class="line">```    </span><br><span class="line">2.4.2 - 将SELINUX=enforcing 修改为 SELINUX=disabled 状态。</span><br></pre></td></tr></table></figure></p>
+<p>2.2 - 没有index.html，index.htm等默认启动页，注意路径<br>2.3 - 权限问题，nginx没有操作项目目录的权限<br>2.3.1 - 修改项目目录的读写权限，使用chmod命令<br>2.3.2 - 把nginx的启动用户修改为目录所属用户<br>2.3.3 - 换启动用户有权限操作的目录<br>2.4 - SELinux设置为开启状态（enabled）的原因。<br>2.4.1 - 查看当前selinux的状态。    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/sestatus  </span><br><span class="line">```      </span><br><span class="line"></span><br><span class="line">2.4.2 - 将SELINUX=enforcing 修改为 SELINUX=disabled 状态。</span><br></pre></td></tr></table></figure>
 <p>vi /etc/selinux/config</p>
-<p>#SELINUX=enforcing</p>
-<p>SELINUX=disabled<br><code>`</code><br>2.4.3 -   重启生效。reboot</p>
+<p>#SELINUX=enforcing<br>SELINUX=disabled<br><code>`</code><br>2.4.3 -   重启生效。reboot</p>
 
       
     </div>
