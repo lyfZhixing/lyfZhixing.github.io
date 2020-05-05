@@ -14,6 +14,8 @@ categories: [docker]
 - [安装](#set)  
 - [更换到国内源](#replace)
 
+<!-- more -->
+
 ## <span id="remove">卸载旧版本</span>   
 
 ```

@@ -11,6 +11,8 @@ categories: [docker]
 
 ---  
 
+<!-- more -->
+
 ## 安装`docker-compse`    
 
 1. 下载docker-compse，这里下载的是`1.25.5`版本，如有其它版本需求可自行替换   
