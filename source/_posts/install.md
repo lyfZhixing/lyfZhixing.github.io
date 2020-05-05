@@ -27,12 +27,13 @@ sudo yum remove docker \
                   docker-engine
 ```  
 
----
+---  
+
 ## <span id="set">设置仓库</span>   
 1. 安装依赖工具   
 
 ```
-sudo yum install -y yum-utils  
+sudo yum install -y yum-utils
 
 ```  
 
@@ -48,16 +49,14 @@ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/dock
 
 ```
 sudo yum-config-manager --enable docker-ce-nightly
-sudo yum-config-manager --enable docker-ce-test  
-
+sudo yum-config-manager --enable docker-ce-test
 ```  
 
 关闭  
 
 ```
 sudo yum-config-manager --disable docker-ce-nightly
-sudo yum-config-manager --disable docker-ce-test  
-
+sudo yum-config-manager --disable docker-ce-test
 ```  
 
 docker默认关闭test/nightly库，只开启stable（正式版），建议关闭   
