@@ -42,7 +42,7 @@ sudo yum install -y yum-utils
 ```
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo  
 
-```  
+```
 
 3. 选择开启或关闭test/nightly库（测试/开发）   
 开启  
@@ -50,14 +50,14 @@ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/dock
 ```
 sudo yum-config-manager --enable docker-ce-nightly
 sudo yum-config-manager --enable docker-ce-test
-```  
+```
 
 关闭  
 
 ```
 sudo yum-config-manager --disable docker-ce-nightly
 sudo yum-config-manager --disable docker-ce-test
-```  
+```
 
 docker默认关闭test/nightly库，只开启stable（正式版），建议关闭   
 
@@ -68,21 +68,21 @@ docker默认关闭test/nightly库，只开启stable（正式版），建议关�
 ```
 sudo yum install docker-ce docker-ce-cli containerd.io
 
-```  
+```
 
 2. 安装特定版本的docker    
 a. 列出docker的版本   
 
 ```
 yum list docker-ce --showduplicates | sort -r
-```  
+```
 
 b. 选择合适版本进行安装，我这里选择`19.03.8`   
 
 ```
 sudo yum install docker-ce-19.03.8 docker-ce-cli-19.03.8 containerd.io
 
-```  
+```
 
 > 这里可能遇到错误:   
 
@@ -92,14 +92,14 @@ Error:
  Problem: package docker-ce-3:19.03.8-3.el7.x86_64 requires containerd.io >= 1.2.2-3,
 but none of the providers can be installed
 
-```  
+```
 
 解决办法： 去下载安装合适版本的[containerd.io](https://download.docker.com/linux/fedora/30/x86_64/stable/Packages/)，我这里选择的是`1.2.13-3.1`  
 
 ```
 yum install https://download.docker.com/linux/fedora/30/x86_64/stable/Packages/containerd.io-1.2.13-3.1.fc30.x86_64.rpm  
 
-```  
+```
 
 安装完成`containerd.io`之后重新执行第二步的操作即可
 
@@ -110,14 +110,14 @@ yum install https://download.docker.com/linux/fedora/30/x86_64/stable/Packages/c
 ```
 sudo systemctl start docker  
 
-```   
+```
 
 > 验证docker是否启动成功，可以跑一个`hello-world`试一下(本地如果没有该镜像，会自动去仓库拉取)   
 
 ```
 sudo docker run hello-world  
 
-```  
+```
 
 ![成功截图](https://gitee.com/lyfZhixing/draw/raw/master/docker/2020-05-05_111003.png)
 
@@ -130,11 +130,11 @@ sudo docker run hello-world
   "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
 }  
 
-```  
+```
 
 - 重启docker服务   
 
 ```
 sudo systemctl restart docker  
 
-```  
+```
