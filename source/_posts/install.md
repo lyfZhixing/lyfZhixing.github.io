@@ -25,7 +25,7 @@ sudo yum remove docker \
                   docker-latest-logrotate \
                   docker-logrotate \
                   docker-engine
-```  
+```
 
 ---  
 
@@ -35,7 +35,7 @@ sudo yum remove docker \
 ```
 sudo yum install -y yum-utils
 
-```  
+```
 
 2. 设置安装仓库   
 
