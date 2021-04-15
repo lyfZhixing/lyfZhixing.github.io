@@ -22,8 +22,11 @@ categories: [java基础]
 - 泛型接口(/类)实例   
 ```
 public interface List<E> extends Collection<E>
-```  
+
+```
+
 这种类型是比较常见的，如上面实例，java中很多常用的接口都使用了泛型作为规范。泛型参数在改类/接口被声明（类：实例化，接口：实现）时确定。  
+
 > tips: 实例中的两个E的区别，List后的泛型E在接口List中可做泛型参数，Collection后的E是用来规范Collection的。
 
 - 泛型方法  
@@ -44,6 +47,7 @@ public interface List<E> extends Collection<E>
 方法本身没有形参也可以通过泛型来指定参数类型  
 
 ```
+
   public <T> T getSth2() {
        T t = null;
        // todo sth
@@ -52,6 +56,7 @@ public interface List<E> extends Collection<E>
 
    // in Class
    this.<String>getSth2();
+
 
 ```
 
@@ -62,6 +67,7 @@ public interface List<E> extends Collection<E>
 - ?  
 
 ```
+
 // 类：Person<T>  属性值：T t
     {
       Person<List> person1 = new Person<List>();
@@ -91,6 +97,7 @@ public interface List<E> extends Collection<E>
 
 
 ## <span id = "erase"> 泛型擦除 </span>  
+
 主流编程语言中，编译器处理泛型的方法：1）code specialization（代码特化）  2）code sharing（代码分享）
 
 // todo
