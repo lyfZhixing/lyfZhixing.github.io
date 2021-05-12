@@ -139,4 +139,10 @@ sudo docker run hello-world
 ```
 sudo systemctl restart docker  
 
-```
+```   
+
+
+> tips: centos7 防火墙状态  
+>查询： firewall-cmd --state   
+> 停止： systemctl stop firewalld.service   
+> 禁止开启启动： systemctl disable firewalld.service 
