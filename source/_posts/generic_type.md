@@ -1,6 +1,6 @@
 ---
 title: Java中的泛型
-date: 2020-5-5 14:42:15
+date: 2020-4-5 14:42:15
 tags: [java, 泛型, 泛型擦除]
 categories: [java基础]
 ---

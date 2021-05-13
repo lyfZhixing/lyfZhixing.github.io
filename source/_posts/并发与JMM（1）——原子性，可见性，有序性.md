@@ -1,6 +1,6 @@
 ---
-title: 并发与JMM
-date: 2020-5-5 14:42:15
+title: 并发与JMM（1）——原子性，可见性，有序性
+date: 2020-5-5 13:42:15
 tags: [java, 并发, JMM]
 categories: [java基础]
 ---
@@ -65,5 +65,3 @@ class Ordering() {
 答案是不一定，因为如果发生指令重排，结果就不一定了，如图：
 
 ![可见性例图](https://gitee.com/lyfZhixing/draw/raw/master/multi-Thread/png/有序性.png)
-
-## 指令重排

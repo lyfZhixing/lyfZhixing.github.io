@@ -1,6 +1,6 @@
 ---
 title: 在docker中安装部署gitlab
-date: 2020-5-5 14:42:15
+date: 2020-5-6 14:42:15
 tags: [docker, gitlab, docker-compose]   
 categories: [docker]
 ---
