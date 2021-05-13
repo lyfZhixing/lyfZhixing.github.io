@@ -1,7 +1,7 @@
 ---
-title: Java中的泛型
+title: 并发与JMM
 date: 2020-5-5 14:42:15
-tags: [java, 泛型, 泛型擦除]
+tags: [java, 并发, JMM]
 categories: [java基础]
 ---
 
