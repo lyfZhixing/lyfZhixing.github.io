@@ -1,6 +1,6 @@
 ---
 title: Java多线程基础
-date: 2020-5-10
+date: 2020-5-10 13:43:21
 tags: [java, 并发, 多线程]
 categories: [java基础]
 ---
@@ -11,7 +11,8 @@ categories: [java基础]
 
 
 ## 生命周期
-在Java中一个线程的生命周期状态有以下六种（都在Thread.State枚举中）：    
+在Java中一个线程的生命周期状态有以下六种（都在Thread.State枚举中）：  
+
 ```
 public enum State {
         // 刚创建线程，尚未执行
@@ -39,7 +40,7 @@ public enum State {
 
 其实在上面的线程状态图中已经包含了大部分线程的基本操作了：   
 
-**1. `new `一个线程对象，用`Thread#start()`启动线程。**    
+### 1. `new `一个线程对象，用`Thread#start()`启动线程。   
 
 `Thread#start()`会让这个线程执行`Thread#run()`,但`Thread#run` 默认的实现为空，故在`new`一个线程对象时需要重写（`@Override`）`run()`方法，实现自己的任务逻辑。
 
@@ -98,7 +99,7 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
 ```
 
 
-**2. 线程终止与中断**   
+## 2. 线程终止与中断  
 
 线程终止的情况：  
 1. 正常执行结束   
@@ -136,13 +137,13 @@ stop已被废弃，JDK提供了一个更为强大的支持，线程中断:
 > tips: 对抛出的InterruptedException进行捕获会清除中断标记，如果后续还需要判断中断状态，需要再次设置中断标记Thread.currentThread.interrupt()   
 
 
-**3. wait()和notify()。**     
+## 3. wait()和notify()。    
 
 wait() 和 notify()是Object类中的两个方法。用于对多线程协作进行支持。    
 
-obj.wait()并不是随便可以调用的，它**必须包含在对应synchronized(obj) 语句中**，因为无论是wait()还是notify()都需要先获得一个目标对象的监视器`（源码中wait()的注释This method should only be called by a thread that is the owner of this object's monitor.）`。notify() 也一样。  
+obj.wait()并不是随便可以调用的，它 **必须包含在对应synchronized(obj) 语句中** ，因为无论是wait()还是notify()都需要先获得一个目标对象的监视器`（源码中wait()的注释This method should only be called by a thread that is the owner of this object's monitor.）`。notify() 也一样。  
 
-obj.wait()使持有obj对象锁的线程进入等待，**并释放资源**让其他等待obj对象的线程可以正常执行，obj.notify()会**随机**唤醒一个等待中的线程，**但不会立即释放资源**需要等待当前线程的synchronized语句执行完毕才会释放，还有一个obj.notifyAll()会唤醒所有等待的线程.
+obj.wait()使持有obj对象锁的线程进入等待，**并释放资源** 让其他等待obj对象的线程可以正常执行，obj.notify()会 **随机** 唤醒一个等待中的线程， **但不会立即释放资源** 需要等待当前线程的synchronized语句执行完毕才会释放，还有一个obj.notifyAll()会唤醒所有等待的线程.
 
 > tips: 实际上, hotspot JVM 中notify（）是顺序唤醒的。[参考文章](https://www.jianshu.com/p/99f73827c616)   
 

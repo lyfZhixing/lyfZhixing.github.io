@@ -1,6 +1,6 @@
 ---
 title: 并发与JMM（2）——指令重排与Happen-Before规则
-date: 2020-5-5
+date: 2020-5-5 13:44:21
 tags: [java, 并发, JMM]
 categories: [java基础]
 ---

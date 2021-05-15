@@ -1,6 +1,6 @@
 ---
 title: JVM架构模型
-date: 2020-6-19 10:23:15
+date: 2020-6-18 10:23:15
 tags: [java, JVM]
 categories: [java基础]
 ---

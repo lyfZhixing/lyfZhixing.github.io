@@ -1,6 +1,6 @@
 ---
 title: docker的安装及换源
-date: 2020-5-5 13:43:21
+date: 2018-9-5 13:43:21
 tags: [docker]   
 categories: [docker]
 ---
@@ -145,4 +145,4 @@ sudo systemctl restart docker
 > tips: centos7 防火墙状态  
 >查询： firewall-cmd --state   
 > 停止： systemctl stop firewalld.service   
-> 禁止开启启动： systemctl disable firewalld.service 
+> 禁止开启启动： systemctl disable firewalld.service
