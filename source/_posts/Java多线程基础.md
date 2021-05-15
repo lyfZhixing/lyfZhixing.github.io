@@ -14,6 +14,7 @@ categories: [java基础]
 在Java中一个线程的生命周期状态有以下六种（都在Thread.State枚举中）：  
 
 ```
+
   public enum State {
           // 刚创建线程，尚未执行
           NEW,
