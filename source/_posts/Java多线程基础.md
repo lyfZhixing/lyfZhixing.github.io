@@ -14,29 +14,17 @@ categories: [java基础]
 在Java中一个线程的生命周期状态有以下六种（都在Thread.State枚举中）：    
 ```
 public enum State {
-        /**
-         * 刚创建线程，尚未执行
-         */
+        // 刚创建线程，尚未执行
         NEW,
-        /**
-         * 线程执行中
-         */
+        // 线程执行中
         RUNNABLE,
-        /**
-         * 线程阻塞（遇到了synchronized同步块）
-         */
+        // 线程阻塞（遇到了synchronized同步块）
         BLOCKED,
-        /**
-         * 线程等待（wait()）,无限期直到被notify()唤醒
-         */
+        // 线程等待（wait()）,无限期直到被notify()唤醒
         WAITING,
-        /**
-         * 线程等待，有时限等待
-         */
+        // 线程等待，有时限等待
         TIMED_WAITING,
-        /**
-         * 线程结束
-         */
+        // 线程结束
         TERMINATED;
     }
 
@@ -65,22 +53,16 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
 
 ```
 
-    /**
-     * 接口
-     */
+    // 接口
     @FunctionalInterface
     public interface Runnable {
         public abstract void run();
     }
 
-    /**
-     * Thread 实现了Runnable接口 作为代理
-     */
+    // Thread 实现了Runnable接口 作为代理
     public class Thread implements Runnable {
 
-        /**
-         * 构造方法之一
-         */
+        // 构造方法之一
         public Thread(Runnable target) {
             init(null, target, "Thread-" + nextThreadNum(), 0);
         }
@@ -93,9 +75,7 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
         }
     }
 
-    /**
-     * 自己实现Runnable 接口
-     */
+    // 自己实现Runnable 接口
     public class MyThread implements Runnable {
         public int count = 10;
         @Override
@@ -106,9 +86,7 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
         }
     }
 
-    /**
-     * 创建线程实例
-     */
+    // 创建线程实例
     public class Test {
         public static void main(String[] args) {
             Thread thread = new Thread(new MyThread());
@@ -117,9 +95,8 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
         }
     }
 
+```
 
-
-```     
 
 **2. 线程终止与中断**   
 
