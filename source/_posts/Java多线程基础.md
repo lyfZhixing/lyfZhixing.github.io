@@ -13,24 +13,7 @@ categories: [java基础]
 ## 生命周期
 在Java中一个线程的生命周期状态有以下六种（都在Thread.State枚举中）：  
 
-```
 
-  public enum State {
-          // 刚创建线程，尚未执行
-          NEW,
-          // 线程执行中
-          RUNNABLE,
-          // 线程阻塞（遇到了synchronized同步块）
-          BLOCKED,
-          // 线程等待（wait()）,无限期直到被notify()唤醒
-          WAITING,
-          // 线程等待，有时限等待
-          TIMED_WAITING,
-          // 线程结束
-          TERMINATED;
-  }
-
-```  
 
 
 
