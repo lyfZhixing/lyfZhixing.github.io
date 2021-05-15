@@ -96,7 +96,8 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
         }
     }
 
-```
+
+```    
 
 
 ## 2. 线程终止与中断  
@@ -109,6 +110,8 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
 
 stop已被废弃，JDK提供了一个更为强大的支持，线程中断:
 ```   
+
+
   public class Thread implements Runnable {
       // 中断线程
       pubulic void interrupt();     
@@ -118,13 +121,15 @@ stop已被废弃，JDK提供了一个更为强大的支持，线程中断:
       poublic static boolean interrupted();
   }
 
+
 ```    
 
 线程中断并不会使线程立马终止，而是给线程发送一个通知，告知线程目标需要终止，线程具体在什么时候退出，由目标线程自行决定（通过isInterrupted判断状态，决定怎么退出以及退出逻辑）。  
 
 关于中断还有中断响应这个概念，所有抛出InterruptedException的方法都可以响应中断，例如：  
 
-```
+```   
+
   // Object#wait()
   public final void wait() throws InterruptedException {
     wait(0);
@@ -133,7 +138,10 @@ stop已被废弃，JDK提供了一个更为强大的支持，线程中断:
   // Thread#sleep(long)
   public static native void sleep(long millis) throws InterruptedException;   
 
-```
+
+```    
+
+
 > tips: 对抛出的InterruptedException进行捕获会清除中断标记，如果后续还需要判断中断状态，需要再次设置中断标记Thread.currentThread.interrupt()   
 
 
@@ -141,7 +149,7 @@ stop已被废弃，JDK提供了一个更为强大的支持，线程中断:
 
 wait() 和 notify()是Object类中的两个方法。用于对多线程协作进行支持。    
 
-obj.wait()并不是随便可以调用的，它 **必须包含在对应synchronized(obj) 语句中** ，因为无论是wait()还是notify()都需要先获得一个目标对象的监视器`（源码中wait()的注释This method should only be called by a thread that is the owner of this object's monitor.）`。notify() 也一样。  
+obj.wait()并不是随便可以调用的，它 **必须包含在对应synchronized(obj) 语句中** ，因为无论是wait()还是notify()都需要先获得一个目标对象的监视器 `（源码中wait()的注释This method should only be called by a thread that is the owner of this object's monitor.）` 。notify() 也一样。  
 
 obj.wait()使持有obj对象锁的线程进入等待，**并释放资源** 让其他等待obj对象的线程可以正常执行，obj.notify()会 **随机** 唤醒一个等待中的线程， **但不会立即释放资源** 需要等待当前线程的synchronized语句执行完毕才会释放，还有一个obj.notifyAll()会唤醒所有等待的线程.
 
