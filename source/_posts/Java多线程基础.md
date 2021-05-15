@@ -22,7 +22,7 @@ categories: [java基础]
       RUNNABLE,
       // 线程阻塞（遇到了synchronized同步块）
       BLOCKED,
-      // 线程等待（wait()）,无限期直到被notify()唤醒
+      // 线程等待（wait(),join()）,直到被notify()唤醒或等待线程结束
       WAITING,
       // 线程等待，有时限等待
       TIMED_WAITING,
