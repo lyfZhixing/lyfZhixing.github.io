@@ -27,9 +27,11 @@ public enum State {
         TIMED_WAITING,
         // 线程结束
         TERMINATED;
-    }
+}
 
 ```  
+
+
 
 可以简单画一张图来描述Java线程的生命周期：     
 
