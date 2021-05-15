@@ -1,6 +1,6 @@
 ---
 title: 并发与JMM（1）——原子性，可见性，有序性
-date: 2020-5-5 13:42:15
+date: 2020-5-5
 tags: [java, 并发, JMM]
 categories: [java基础]
 ---
