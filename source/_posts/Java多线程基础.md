@@ -104,7 +104,7 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
 ```    
 
 
-## 2. 线程终止与中断  
+### 2. 线程终止与中断  
 
 线程终止的情况：  
 1. 正常执行结束   
@@ -149,7 +149,7 @@ stop已被废弃，JDK提供了一个更为强大的支持，线程中断:
 > tips: 对抛出的InterruptedException进行捕获会清除中断标记，如果后续还需要判断中断状态，需要再次设置中断标记Thread.currentThread.interrupt()   
 
 
-## 3. wait()和notify()。    
+### 3. wait()和notify()。    
 
 wait() 和 notify()是Object类中的两个方法。用于对多线程协作进行支持。    
 
