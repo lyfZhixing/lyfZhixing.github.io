@@ -58,47 +58,47 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
 
 ```
 
-// 接口
-@FunctionalInterface
-public interface Runnable {
-    public abstract void run();
-}
+  // 接口
+  @FunctionalInterface
+  public interface Runnable {
+      public abstract void run();
+  }
 
-// Thread 实现了Runnable接口 作为代理
-public class Thread implements Runnable {
+  // Thread 实现了Runnable接口 作为代理
+  public class Thread implements Runnable {
 
-    // 构造方法之一
-    public Thread(Runnable target) {
-        init(null, target, "Thread-" + nextThreadNum(), 0);
-    }
+      // 构造方法之一
+      public Thread(Runnable target) {
+          init(null, target, "Thread-" + nextThreadNum(), 0);
+      }
 
-    @Override
-    public void run() {
-        if (target != null) {
-            target.run();
-        }
-    }
-}
+      @Override
+      public void run() {
+          if (target != null) {
+              target.run();
+          }
+      }
+  }
 
-// 自己实现Runnable 接口
-public class MyThread implements Runnable {
-    public int count = 10;
-    @Override
-    public synchronized void run(){
-        while(count>0){
-            count--;
-        }
-    }
-}
+  // 自己实现Runnable 接口
+  public class MyThread implements Runnable {
+      public int count = 10;
+      @Override
+      public synchronized void run(){
+          while(count>0){
+              count--;
+          }
+      }
+  }
 
-// 创建线程实例
-public class Test {
-    public static void main(String[] args) {
-        Thread thread = new Thread(new MyThread());
-        // start()会调用native方法start0(),继而由 JVM 来实现多线程的控制,因为需要系统调用来控制时间分片
-        thread.start();
-    }
-}
+  // 创建线程实例
+  public class Test {
+      public static void main(String[] args) {
+          Thread thread = new Thread(new MyThread());
+          // start()会调用native方法start0(),继而由 JVM 来实现多线程的控制,因为需要系统调用来控制时间分片
+          thread.start();
+      }
+  }
 
 ```   
 
