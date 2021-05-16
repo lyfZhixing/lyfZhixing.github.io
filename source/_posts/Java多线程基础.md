@@ -107,11 +107,11 @@ public class Test {
 
 线程终止的情况：  
 1. 正常执行结束   
-2. 调用Thread#stop()方法暴力终止。由于其会把执行一半的线程强行终止，可能还会引起数据不一致问题，目前已被废弃（`@Deprecated`）     
+2. 调用Thread#stop()方法暴力终止。由于其会把执行一半的线程强行终止，可能还会引起数据不一致问题，目前已被废弃（@Deprecated）     
 
 ![stop](https://gitee.com/lyfZhixing/draw/raw/master/multi-Thread/png/stop.png)   
 
-stop已被废弃，JDK提供了一个更为强大的支持，线程中断:  
+stop已被废弃，JDK提供了一个更为强大的支持，线程中断:
 
 ```
 
