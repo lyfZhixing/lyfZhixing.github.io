@@ -100,7 +100,7 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
    }
   }
 
-```   
+```
 
 
 ### 线程终止与中断  
@@ -131,7 +131,7 @@ public class Thread implements Runnable {
 
 关于中断还有中断响应这个概念，所有抛出InterruptedException的方法都可以响应中断，例如：  
 
-```   
+```
 
   // Object#wait()
   public final void wait() throws InterruptedException {
@@ -182,7 +182,8 @@ join() 字面意思是加入，但其在Java中其实也是一种等待，其核
  wait(0);   // join(long)则调用wait(long)
   }
 
-```  
+```
+
 > tips: 由于join() 实际调用wait() 故在开发中不用在Thread对象上使用wait() , notify()，因为这样可能会和系统api相互影响产生预期之外的错误。  
 
 
@@ -219,7 +220,7 @@ yield()是一个静态native方法，使用yield() 会使当前线程让出CPU�
  thread.setPriority(Thread.MAX_PRIORITY);
  thread.start();
 
- ```  
+ ```
 
 ## 线程安全概念  
 
