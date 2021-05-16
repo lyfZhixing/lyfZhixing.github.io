@@ -44,7 +44,7 @@ categories: [java基础]
 
 其实在上面的线程状态图中已经包含了大部分线程的基本操作了：   
 
-### 1. `new `一个线程对象，用`Thread#start()`启动线程。   
+### new 一个线程对象，用Thread#start()启动线程。   
 
 `Thread#start()`会让这个线程执行`Thread#run()`,但`Thread#run` 默认的实现为空，故在`new`一个线程对象时需要重写（`@Override`）`run()`方法，实现自己的任务逻辑。
 
@@ -58,53 +58,52 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
 
 ```
 
-    // 接口
-    @FunctionalInterface
-    public interface Runnable {
-        public abstract void run();
+// 接口
+@FunctionalInterface
+public interface Runnable {
+    public abstract void run();
+}
+
+// Thread 实现了Runnable接口 作为代理
+public class Thread implements Runnable {
+
+    // 构造方法之一
+    public Thread(Runnable target) {
+        init(null, target, "Thread-" + nextThreadNum(), 0);
     }
 
-    // Thread 实现了Runnable接口 作为代理
-    public class Thread implements Runnable {
-
-        // 构造方法之一
-        public Thread(Runnable target) {
-            init(null, target, "Thread-" + nextThreadNum(), 0);
-        }
-
-        @Override
-        public void run() {
-            if (target != null) {
-                target.run();
-            }
+    @Override
+    public void run() {
+        if (target != null) {
+            target.run();
         }
     }
+}
 
-    // 自己实现Runnable 接口
-    public class MyThread implements Runnable {
-        public int count = 10;
-        @Override
-        public synchronized void run(){
-            while(count>0){
-                count--;
-            }
+// 自己实现Runnable 接口
+public class MyThread implements Runnable {
+    public int count = 10;
+    @Override
+    public synchronized void run(){
+        while(count>0){
+            count--;
         }
     }
+}
 
-    // 创建线程实例
-    public class Test {
-        public static void main(String[] args) {
-            Thread thread = new Thread(new MyThread());
-            // start()会调用native方法start0(),继而由 JVM 来实现多线程的控制,因为需要系统调用来控制时间分片
-            thread.start();
-        }
+// 创建线程实例
+public class Test {
+    public static void main(String[] args) {
+        Thread thread = new Thread(new MyThread());
+        // start()会调用native方法start0(),继而由 JVM 来实现多线程的控制,因为需要系统调用来控制时间分片
+        thread.start();
     }
+}
+
+```   
 
 
-```    
-
-
-### 2. 线程终止与中断  
+### 线程终止与中断  
 
 线程终止的情况：  
 1. 正常执行结束   
@@ -112,21 +111,21 @@ Thread类有一个重要的构造方法： `public Thread(Runnable target)` ,看
 
 ![stop](https://gitee.com/lyfZhixing/draw/raw/master/multi-Thread/png/stop.png)   
 
-stop已被废弃，JDK提供了一个更为强大的支持，线程中断:
-```   
+stop已被废弃，JDK提供了一个更为强大的支持，线程中断:  
 
+```
 
-  public class Thread implements Runnable {
-      // 中断线程
-      pubulic void interrupt();     
-      // 判断是否被中断  
-      public boolean isInterrupted();
-      // 判断是否被中断，并清除当前中断状态
-      poublic static boolean interrupted();
-  }
+public class Thread implements Runnable {
+    // 中断线程
+    pubulic void interrupt();     
+    // 判断是否被中断  
+    public boolean isInterrupted();
+    // 判断是否被中断，并清除当前中断状态
+    poublic static boolean interrupted();
+}
 
+```
 
-```    
 
 线程中断并不会使线程立马终止，而是给线程发送一个通知，告知线程目标需要终止，线程具体在什么时候退出，由目标线程自行决定（通过isInterrupted判断状态，决定怎么退出以及退出逻辑）。  
 
@@ -149,7 +148,7 @@ stop已被废弃，JDK提供了一个更为强大的支持，线程中断:
 > tips: 对抛出的InterruptedException进行捕获会清除中断标记，如果后续还需要判断中断状态，需要再次设置中断标记Thread.currentThread.interrupt()   
 
 
-### 3. wait()和notify()。    
+### wait()和notify()。    
 
 wait() 和 notify()是Object类中的两个方法。用于对多线程协作进行支持。    
 
@@ -208,34 +207,21 @@ yield()是一个静态native方法，使用yield() 会使当前线程让出CPU�
 
 2. 设置线程优先级（Priority）, 优先级从1到10，数字越大优先级越高，高的优先级并不表示一定会最先执行.Thread类默认给了三个优先级 1， 5， 10.
 
-```  
+```
 
-  // -----------------Thread默认的三个优先级别----------------
-  /**
-    * The minimum priority that a thread can have.
-    */
-   public final static int MIN_PRIORITY = 1;
+// Thread默认的三个优先级别
+ public final static int MIN_PRIORITY = 1;
+ public final static int NORM_PRIORITY = 5;
+ public final static int MAX_PRIORITY = 10;
 
-  /**
-    * The default priority that is assigned to a thread.
-    */
-   public final static int NORM_PRIORITY = 5;
+ //设置优先级
+ Thread thread = new Thread();
+ thread.setPriority(Thread.MAX_PRIORITY);
+ thread.start();
 
-   /**
-    * The maximum priority that a thread can have.
-    */
-   public final static int MAX_PRIORITY = 10;
+ ```     
 
-
-   //------------------设置优先级--------------------------
-   Thread thread = new Thread();
-   thread.setPriority(Thread.MAX_PRIORITY);
-   thread.start();
-
-
-```     
-
-### 线程安全概念     
+## 线程安全概念     
 
 使用多线程可以提升效率但是也不能牺牲正确性，多线程操作临界区数据时若没有进行恰当的处理，则很有可能会产生冲突。最简单的处理办法就是使用synchronized关键字来实现线程间的同步，更加强大的控制则需要对JUC并发包进行学习。
 
