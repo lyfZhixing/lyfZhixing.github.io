@@ -163,4 +163,82 @@ obj.wait()使持有obj对象锁的线程进入等待，**并释放资源** 让�
 
 >tips: 使用jstack命令可以查看当前系统的线程信息。配合jps使用   
 
->tips: 推荐wait()和notify()配合使用来替换挂起suspend()和继续执行resume()这两个已被废弃的方法。线程挂起suspend()并不会释放资源，若使用不当，resume()方法在suspend()之前执行了，还会导致死锁。被挂起的线程状态还是Runnable
+>tips: 推荐wait()和notify()配合使用来替换挂起suspend()和继续执行resume()这两个已被废弃的方法。线程挂起suspend()并不会释放资源，若使用不当，resume()方法在suspend()之前执行了，还会导致死锁。被挂起的线程状态还是Runnable    
+
+
+### join() 和 yield()    
+
+join() 字面意思是加入，但其在Java中其实也是一种等待，其核心代码如下,调用了`wait(0)` 方法.但join()不用notify通知唤醒，它会在被阻塞线程执行完毕后自动释放资源。     
+
+适用场景： 线程A的输入依赖与线程B的输出，则就需要使用B.join(),等待B执行完毕，A再继续执行
+
+
+```
+
+  public final void join() throws InterruptedException; // 调用join(0)
+
+  public final synchronized void join(long millis) throws InterruptedException;
+
+  while (isAlive()) {
+    wait(0);      // join(long)则调用wait(long)
+  }
+
+```  
+> tips: 由于join() 实际调用wait() 故在开发中不用在Thread对象上使用wait() , notify()，因为这样可能会和系统api相互影响产生预期之外的错误。     
+
+
+yield()是一个静态native方法，使用yield() 会使当前线程让出CPU，之后和其他线程再次竞争CPU资源。   
+
+
+使用场景：一个线程不怎么重要，或者优先级很低，怎可以在适当的时候调用yield() 让出资源，给其他线程更多机会。     
+
+### 其他操作    
+
+1. 设置后台守护进程（Daemon） ，如垃圾回收线程，JIT线程    
+
+```
+
+  Thread thread = new Thread();
+  // 此方法必须在start之前执行，否则该线程还会继续正常执行，
+  // 但不会当做守护线程执行，而是被当做用户线程
+  thread.setDaemon(true);     
+  thread.start();
+
+```    
+
+2. 设置线程优先级（Priority）, 优先级从1到10，数字越大优先级越高，高的优先级并不表示一定会最先执行.Thread类默认给了三个优先级 1， 5， 10.
+
+```  
+
+  // -----------------Thread默认的三个优先级别----------------
+  /**
+    * The minimum priority that a thread can have.
+    */
+   public final static int MIN_PRIORITY = 1;
+
+  /**
+    * The default priority that is assigned to a thread.
+    */
+   public final static int NORM_PRIORITY = 5;
+
+   /**
+    * The maximum priority that a thread can have.
+    */
+   public final static int MAX_PRIORITY = 10;
+
+
+   //------------------设置优先级--------------------------
+   Thread thread = new Thread();
+   thread.setPriority(Thread.MAX_PRIORITY);
+   thread.start();
+
+
+```     
+
+### 线程安全概念     
+
+使用多线程可以提升效率但是也不能牺牲正确性，多线程操作临界区数据时若没有进行恰当的处理，则很有可能会产生冲突。最简单的处理办法就是使用synchronized关键字来实现线程间的同步，更加强大的控制则需要对JUC并发包进行学习。
+
+synchronized关键字除了用于同步，确保线程安全外还可以保证线程间的可见性和有序性。可见性完全可以替代volatile关键字，只是没有volatite使用方便；有序性，被synchronized修饰的代码块内部是串行执行的，必然可以保证有序性。    
+
+>tips:  并发下的ArrayList可能会抛出下标越界的异常，这是由于ArrayList在扩容过程中，内部一致性遭到破坏，由于没有锁的保护其他线程访问到了不一致的内部状态，导致下标越界。 或者没有异常信息但是最终结果不一致，这是由于多线程访问冲突，使得保存容器大小的变量被不正常访问，同时有多个线程对ArrayList的同一位置进行赋值，并发下的HashMap也可能会出现这个问题。
